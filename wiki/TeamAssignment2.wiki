@@ -2,12 +2,12 @@
 
 = Introduction =
 
-The analysis of *NerdPad* application
+The analysis of NerdPad application
 
 
 = Details =
 
-*NerdPad User Analysis*
+==NerdPad User Analysis==
 
 The target users are the customers who are familiar with IT technology or who are willing to try new things to get the benefit of convenience.
 
@@ -33,7 +33,7 @@ _Work environment and other social context:_ users use this app in restaurant
 
 _Relationships and communication patterns:_ user read information on pad and order meal by touching on it
 
-The stakeholders can be classified as follows:
+===The stakeholders can be classified as follows:===
 
 *Primary* stakeholders: the customers of the restaurant
 
@@ -43,9 +43,9 @@ The stakeholders can be classified as follows:
 
 *Facilitating* stakeholders: the developers of this system
 
-*NerdPad Task  Analysis:*
+==NerdPad Task  Analysis:==
 
-    *Tasks:*
+===Tasks:===
 
 *1. Order Appetizer*
 
