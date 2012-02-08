@@ -43,6 +43,8 @@ _Relationships and communication patterns:_ user read information on pad and ord
 
 *Facilitating* stakeholders: the developers of this system
 
+
+
 ==NerdPad Task  Analysis:==
 
 ===Tasks:===
