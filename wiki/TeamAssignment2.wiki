@@ -1,0 +1,33 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+Add your content here.
+
+
+= Details =
+
+NerdPad User Analysis
+
+The target users are the customers who are familiar with IT technology or who are willing to try new things to get the benefit of convenience.
+Age: the users should include all age range, but maybe more welcome by young people
+Gender: be same to male and female
+Ethnicity: be same to all ethnicity
+Education: should be same to people from all education levels, but people with higher level education maybe more willing to try it
+Physical abilities: users should have basic ability of eyes and hands, like see things and touch
+General computer experience: doesn’t need much computer exerience
+Skills (typing? Reading?): doesn’t need typing by users, simple reading needed
+Domain experience: users need basic order experience in restaurant
+Application experience: doesn’t need user’s application experience
+Work environment and other social context: users use this app in restaurant
+Relationships and communication patterns: user read information on pad and order meal by touching on it
+
+The stakeholders can be classified as follows:
+
+Primary stakeholders: the customers of the restaurant
+
+Secondary stakeholders: the waiter, chef, and manager of the restaurant
+
+Tertiary stakeholders: the investors of the restaurant
+
+Facilitating stakeholders: the developers of this system
