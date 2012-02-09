@@ -1,5 +1,0 @@
-#summary Project Title.
-
-= Introduction =
-
-The title of the application build for "Nerd Bistro" for ordering food in restaurant.
