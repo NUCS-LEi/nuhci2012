@@ -11,11 +11,16 @@ public final class R {
     public static final class attr {
     }
     public static final class drawable {
-        public static final int ic_launcher=0x7f020000;
-        public static final int images=0x7f020001;
-        public static final int layout_bg=0x7f020002;
-        public static final int wheel_bg=0x7f020003;
-        public static final int wheel_val=0x7f020004;
+        public static final int down=0x7f020000;
+        public static final int ic_launcher=0x7f020001;
+        public static final int images=0x7f020002;
+        public static final int layout_bg=0x7f020003;
+        public static final int sleep=0x7f020004;
+        public static final int t_down=0x7f020005;
+        public static final int t_up=0x7f020006;
+        public static final int up=0x7f020007;
+        public static final int wheel_bg=0x7f020008;
+        public static final int wheel_val=0x7f020009;
     }
     public static final class id {
         public static final int AnalogClock1=0x7f060006;
@@ -55,19 +60,19 @@ public final class R {
         public static final int foodBtn3=0x7f06001b;
         public static final int foodBtn4=0x7f06001c;
         public static final int foodCheckBox=0x7f060027;
-        public static final int foodDoneBtn=0x7f060045;
+        public static final int foodDoneBtn=0x7f060046;
         public static final int foodNextBtn=0x7f06001e;
-        public static final int goToBedTimeDoneBtn=0x7f060046;
+        public static final int goToBedTimeDoneBtn=0x7f060047;
         public static final int howIsMySleepBtn=0x7f060023;
         public static final int introductionStartBtn=0x7f060020;
-        public static final int physicalActivityDoneBtn=0x7f060047;
+        public static final int physicalActivityDoneBtn=0x7f060048;
         public static final int questionCancelBtn=0x7f06002a;
         public static final int questionSetBtn=0x7f06002b;
         public static final int set_am_pm=0x7f060036;
         public static final int set_hour=0x7f060034;
         public static final int set_minute=0x7f060035;
-        public static final int sleepDurationDoneBtn=0x7f060048;
-        public static final int sleepScoreDoneBtn=0x7f060049;
+        public static final int sleepDurationDoneBtn=0x7f060049;
+        public static final int sleepScoreDoneBtn=0x7f06004a;
         public static final int smokeBackBtn=0x7f060032;
         public static final int smokeBtn1=0x7f06002c;
         public static final int smokeBtn2=0x7f06002d;
@@ -77,24 +82,25 @@ public final class R {
         public static final int smokeBtn6=0x7f060031;
         public static final int smokeCheckBox=0x7f060026;
         public static final int smokeNextBtn=0x7f060033;
-        public static final int smokingDoneBtn=0x7f06004a;
+        public static final int smokingDoneBtn=0x7f06004b;
         public static final int startBtn=0x7f060037;
         public static final int startSleepTrackBtn=0x7f060021;
         public static final int statGrid=0x7f060041;
         public static final int statInfo=0x7f060040;
         public static final int statName=0x7f060043;
-        public static final int statValue=0x7f060044;
+        public static final int statValue1=0x7f060044;
+        public static final int statValue2=0x7f060045;
         public static final int stopTrackingBtn=0x7f060018;
         public static final int stressBackBtn=0x7f06003b;
         public static final int stressBtn1=0x7f060038;
         public static final int stressBtn2=0x7f060039;
         public static final int stressBtn3=0x7f06003a;
         public static final int stressCheckBox=0x7f060029;
-        public static final int stressDoneBtn=0x7f06004b;
+        public static final int stressDoneBtn=0x7f06004c;
         public static final int stressNextBtn=0x7f06003c;
         public static final int textView1=0x7f06001f;
         public static final int userStatTitle=0x7f06003f;
-        public static final int wakeUpTimeDoneBtn=0x7f06004c;
+        public static final int wakeUpTimeDoneBtn=0x7f06004d;
     }
     public static final class layout {
         public static final int activity_question=0x7f030000;
