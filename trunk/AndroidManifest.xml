@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="edu.neu.hci"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk android:minSdkVersion="10" />
+
+    <application
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name" >
+        <activity
+            android:name=".Introduction"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".GoodSleepActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".questionaire.CaffeineQuestionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".questionaire.AlcoholQuestionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".questionaire.SmokeQuestionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".questionaire.FoodQuestionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".questionaire.ActivityQuestionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".questionaire.StressQuestionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.SleepSummaryDetail"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.SleepSummaryGraph"
+            android:screenOrientation="landscape" >
+        </activity>
+        <activity
+            android:name=".summary.SleepSummaryMain"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.SleepScoreActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.AlcoholActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.CaffeineActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.FoodActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.GoToBedTimeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.PhysicalActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.SleepDurationActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.WakeUpTimeActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".StartSleepActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".DuringSleepActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".questionaire.SettingQuestionActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        
+    </application>
+
+</manifest>
