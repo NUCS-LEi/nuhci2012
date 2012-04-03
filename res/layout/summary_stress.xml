@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:text="" />
+    <TextView
+        android:textSize="25dp"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="9"
+        android:gravity="top"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Do not attempt to sleep while stressing about problems. 
+        Yesterday your stress level was higher/lower than your average." />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="4"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <TextView
+        style="@style/normal_text"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="" />
+
+        <Button
+            android:id="@+id/stressDoneBtn"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Done" />
+    </LinearLayout>
+
+</LinearLayout>

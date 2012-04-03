@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.35"
+        android:text="Food (4/6)" />
+
+    <TextView
+        style="@style/normal_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1.61"
+        android:gravity="left"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="How much did your eat tonight?"
+        android:textSize="28sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.31"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/foodBtn1"
+                style="@style/button_text"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="None" />
+
+            <Button
+                android:id="@+id/foodBtn2"
+                style="@style/button_text"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="A Little" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/foodBtn3"
+                style="@style/button_text"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Enough" />
+
+            <Button
+                android:id="@+id/foodBtn4"
+                style="@style/button_text"
+                android:layout_width="0px"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="To Much" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1.19"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/foodBackBtn"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="50dp"
+            android:layout_weight="1.00"
+            android:text="Back" />
+
+        <Button
+            android:id="@+id/foodNextBtn"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="51dp"
+            android:layout_weight="1.00"
+            android:text="Next" />
+    </LinearLayout>
+
+</LinearLayout>
