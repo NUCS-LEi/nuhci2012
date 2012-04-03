@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="1"
+        android:text="" />
+    <TextView
+        style="@style/normal_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="9"
+        android:gravity="center"
+        android:textSize="28sp"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Have a good sleep! Keep wearing your sensor!" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="4"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <TextView
+        style="@style/normal_text"
+        android:layout_width="0px"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="top"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="" />
+
+        <Button
+            android:id="@+id/stopTrackingBtn"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Stop Tracking" />
+    </LinearLayout>
+
+</LinearLayout>

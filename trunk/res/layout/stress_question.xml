@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.18"
+        android:text="Stress (6/6)" />
+
+    <TextView
+        style="@style/normal_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.89"
+        android:gravity="left"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="How stressful was today for you?"
+        android:textSize="28sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|fill"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/stressBtn1"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.01"
+            android:text="None" />
+
+        <Button
+            android:id="@+id/stressBtn2"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="79dp"
+            android:layout_weight="1.00"
+            android:text="Low" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal|fill"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/stressBtn3"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="match_parent"
+            android:layout_weight="1.01"
+            android:text="Moderate" />
+
+        <Button
+            android:id="@+id/stressBtn4"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="79dp"
+            android:layout_weight="1.00"
+            android:text="High" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.83"
+        android:gravity="bottom"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/stressBackBtn"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="50dp"
+            android:layout_weight="1.00"
+            android:text="Back" />
+
+        <Button
+            android:id="@+id/stressNextBtn"
+            style="@style/button_text"
+            android:layout_width="0px"
+            android:layout_height="51dp"
+            android:layout_weight="1.00"
+            android:text="Next" />
+
+    </LinearLayout>
+
+</LinearLayout>

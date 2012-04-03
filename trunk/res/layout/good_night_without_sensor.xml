@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.08"
+        android:text="Have a Good Sleep!" />
+
+    <TextView
+        style="@style/normal_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.32"
+        android:gravity="top"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Keep wearing your sensor!"
+        android:textSize="28sp" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="297dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.17"
+        android:paddingLeft="15dp"
+        android:text="Alarm time:   6:00 AM"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/caffeineBackBtn"
+        style="@style/button_text"
+        android:layout_width="198dp"
+        android:layout_height="42dp"
+        android:paddingLeft="50px"
+        android:text="Stop Tracking" />
+
+</LinearLayout>
