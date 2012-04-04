@@ -18,8 +18,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Sleep Score is the proportion of your sleep time (both deep and light phases) to the whole time you were in bed last night. 
-        Your last night sleep score is:" />
+        android:text="Sleep Score is the proportion of your sleep time (both deep and light phases) to the whole time you were in bed last night.Your last night sleep score is:" />
 
     <LinearLayout
         android:layout_width="fill_parent"
