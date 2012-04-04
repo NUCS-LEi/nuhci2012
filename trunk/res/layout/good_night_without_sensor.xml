@@ -1,3 +1,61 @@
+<<<<<<< .mine
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:layout_width="fill_parent"
+        android:layout_height="84dp"
+        android:text="Have a Good Sleep!" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="215dp"
+        android:layout_weight="1.15"
+        android:gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:text="Keep wering your sensor during your entire sleep time please!"
+        android:textSize="25dp" />
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="111dp"
+        android:layout_weight="0.91"
+        android:orientation="horizontal" >
+
+        <TextView
+            android:id="@+id/textView1"
+            android:layout_width="177dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:paddingLeft="10dp"
+            android:text="Alarm time:"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:textSize="24sp" />
+
+        <DigitalClock
+            android:id="@+id/digitalClock1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.14"
+            android:text="DigitalClock"
+            android:textSize="25sp" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/caffeineBackBtn"
+        style="@style/button_text"
+        android:layout_width="190dp"
+        android:layout_height="42dp"
+        android:paddingLeft="50px"
+        android:text="Stop Tracking" />
+
+</LinearLayout>=======
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -40,4 +98,4 @@
         android:paddingLeft="50px"
         android:text="Stop Tracking" />
 
-</LinearLayout>
+</LinearLayout>>>>>>>> .r22
