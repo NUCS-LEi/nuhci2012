@@ -1,76 +1,3 @@
-<<<<<<< .mine
-<?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical" >
-
-    <TextView
-        style="@style/title"
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1.50"
-        android:text="Sensor Missing!" />
-
-    <TextView
-        style="@style/normal_text"
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:gravity="top"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="The sensor is not detected! please where a charged one and"
-        android:textSize="28dp" />
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.31"
-        android:gravity="center_horizontal"
-        android:orientation="vertical" >
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/caffeineBtn1"
-                style="@style/button_text"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Try again" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center_horizontal"
-            android:orientation="horizontal" >
-
-            <Button
-                android:id="@+id/caffeineBtn5"
-                style="@style/button_text"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Continue Without Sensor" />
-        </LinearLayout>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="0.77"
-        android:gravity="bottom"
-        android:orientation="horizontal" >
-
-    </LinearLayout>
-
-</LinearLayout>=======
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -142,4 +69,4 @@
 
     </LinearLayout>
 
-</LinearLayout>>>>>>>> .r22
+</LinearLayout>
