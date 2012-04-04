@@ -1,3 +1,67 @@
+<<<<<<< .mine
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        style="@style/title"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.49"
+        android:text="Wake Up Time!"
+        android:textSize="28sp" />
+
+    <DigitalClock
+        android:id="@+id/DigitalClock1"
+        style="@style/normal_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.97"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:paddingTop="40sp"
+        android:text="DigitalClock"
+        android:textSize="40sp" />
+
+    <TextView
+        style="@style/normal_text"
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="0.81"
+        android:gravity="left"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Tap screen to snooze"
+        android:textSize="28sp" />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.31"
+        android:gravity="center_horizontal"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="239dp"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal" >
+
+            <Button
+                android:id="@+id/caffeineBtn6"
+                style="@style/button_text"
+                android:layout_width="200px"
+                android:layout_height="60px"
+               
+                android:text="Turn Off"
+                android:textSize="22sp" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>=======
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -48,4 +112,4 @@
         </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+</LinearLayout>>>>>>>> .r22
