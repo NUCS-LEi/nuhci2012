@@ -46,7 +46,6 @@
                 android:id="@+id/coffeineCheckBox"
                 
                 android:layout_width="0px"
-                android:paddingLeft=""
                 
                 
                 android:layout_height="wrap_content"
@@ -112,7 +111,6 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="Physical Activity" 
-                android
                 android:textSize="22dp"/>
 
             <CheckBox
@@ -137,7 +135,7 @@
             style="@style/button_text"
             android:layout_width="150dp"
             android:layout_height="60dp"
-            android:paddingLeft=""
+            android:paddingLeft="25dp"
             android:text="Done"
             android:textSize="24sp" />
     </LinearLayout>
