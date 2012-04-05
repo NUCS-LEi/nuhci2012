@@ -18,7 +18,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Keep a consistent go to bed time each night, seven nights per week. Last night you slept later/sooner than your average go to bed time." />
+        android:text="Keep a consistent go to bed time during all days of the week, including weekends. Last night you slept later/sooner than your average go to bed time." />
 
     <LinearLayout
         android:layout_width="fill_parent"
