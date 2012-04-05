@@ -7,15 +7,15 @@
     <TextView
         style="@style/title"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.35"
+        android:layout_height="0px"
+        android:layout_weight="1"
         android:text="Food (4/6)" />
 
     <TextView
         style="@style/normal_text"
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="1.61"
+        android:layout_weight="1.5"
         android:gravity="left"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -24,8 +24,8 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.31"
+        android:layout_height="0px"
+        android:layout_weight="2.5"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
@@ -39,7 +39,7 @@
                 android:id="@+id/foodBtn1"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="None" />
 
@@ -47,7 +47,7 @@
                 android:id="@+id/foodBtn2"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="A Little" />
         </LinearLayout>
@@ -62,7 +62,7 @@
                 android:id="@+id/foodBtn3"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="Enough" />
 
@@ -70,7 +70,7 @@
                 android:id="@+id/foodBtn4"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="To Much" />
         </LinearLayout>
@@ -78,16 +78,16 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1.19"
+        android:layout_height="70dp"
         android:gravity="bottom"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        style="@style/menu_bg">
 
         <Button
             android:id="@+id/foodBackBtn"
             style="@style/button_text"
             android:layout_width="0px"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="1.00"
             android:text="Back" />
 
@@ -95,7 +95,7 @@
             android:id="@+id/foodNextBtn"
             style="@style/button_text"
             android:layout_width="0px"
-            android:layout_height="51dp"
+            android:layout_height="60dp"
             android:layout_weight="1.00"
             android:text="Next" />
     </LinearLayout>
