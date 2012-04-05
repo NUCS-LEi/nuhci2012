@@ -2,6 +2,7 @@ package edu.neu.hci.questionaire;
 
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
+import edu.neu.hci.StartSleepActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -42,7 +43,7 @@ public class QuestionnaireFeedbackActivity extends Activity {
 	private void naviConfirm() {
 		Intent i = new Intent();
 		// Set navigation, first parameter is source, second is target.
-		i.setClass(QuestionnaireFeedbackActivity.this, GoodSleepActivity.class);
+		i.setClass(QuestionnaireFeedbackActivity.this, StartSleepActivity.class);
 		startActivity(i);
 	}
 
