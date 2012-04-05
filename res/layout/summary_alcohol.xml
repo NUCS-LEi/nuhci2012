@@ -18,8 +18,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Avoid excessive consumption of liquids and alcohol in the evening. 
-        Yesterday you drank more/less than your average." />
+        android:text="Avoid excessive consumption of alcohol in the evening. Yesterday you drank more/less than your average." />
 
     <LinearLayout
         android:layout_width="fill_parent"

@@ -18,8 +18,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Do not attempt to sleep while stressing about problems. 
-        Yesterday your stress level was higher/lower than your average." />
+        android:text="Do not attempt to sleep while stressing about problems. Yesterday your stress level was higher/lower than your average." />
 
     <LinearLayout
         android:layout_width="fill_parent"
