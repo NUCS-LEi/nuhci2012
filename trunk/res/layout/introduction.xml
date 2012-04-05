@@ -3,41 +3,35 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
-    <TextView
-        style="@style/title"
-        android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1"
-        android:text="" />
-
+    
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="9"
+        android:layout_weight="10"
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Good sleep is designed to help you improve your sleep quality. To benefit more of this application, you need to: 
-        \n\nAnswer a short questionnaire every day.\nSet your wake up alarm within the application and\nWear the activity detector sensor before going to bed.\nThen, you can check your sleep quality after waking up."
+        android:text="\nGood sleep helps you to manage and modify your sleep. To benefit more of this application, you need to: 
+        \n1) Set your wake up alarm within the application.\n2) Answer a short questionnaire every day about the parameters that may affect your sleep.\n3) Wear the activity detector sensor before going to bed.\nYou can check your sleep quality and the effect of different parameters on your sleep after waking up."
         android:textSize="20dp" />
 
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="4"
+        android:layout_weight="2"
         android:gravity="bottom"
+        android:paddingLeft="300px"
         android:orientation="horizontal" >
 
         <Button
             android:id="@+id/introductionStartBtn"
             style="@style/button_text"
-            android:layout_width="fill_parent"
+            android:layout_width="150dp"
             android:paddingLeft="25px"
             android:paddingRight="25px"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Start" />
+            android:gravity="center"
+            android:layout_height="60dp"
+            android:text="Got it" />
     </LinearLayout>
 
 </LinearLayout>
