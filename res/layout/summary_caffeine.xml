@@ -23,26 +23,16 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="70dp"
-        android:gravity="bottom"
+        android:gravity="center|right"
         android:orientation="horizontal" 
         style="@style/menu_bg">
 
-
-        <TextView
-        style="@style/normal_text"
-        android:layout_width="0px"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:gravity="top"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="" />
 
         <Button
             android:id="@+id/caffeineDoneBtn"
             style="@style/button_text"
             android:layout_height="60sp"
-            android:layout_weight="1"
+            android:layout_width="150dp"
             android:text="Done" />
     </LinearLayout>
 

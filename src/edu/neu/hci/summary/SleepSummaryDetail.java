@@ -48,7 +48,7 @@ public class SleepSummaryDetail extends Activity {
 		for (int i = 0; i < s.length; i++) {
 			summaryDetail.add(s[i]);
 		}
-		int maxRows = (summaryDetail != null) ? Math.max(12, summaryDetail.size()) : 12;
+		int maxRows = (summaryDetail != null) ? Math.max(10, summaryDetail.size()) : 10;
 		statGrid.removeAllViews();
 		statInfo.setVisibility(View.VISIBLE);
 		for (int i = 0; i < maxRows; i++) {
