@@ -42,14 +42,6 @@
                 android:text="Start Sleep Tracking" />
 
             <Button
-                android:id="@+id/answerQuestionareBtn"
-                style="@style/button_text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:text="Answer Questionaire" />
-
-            <Button
                 android:id="@+id/howIsMySleepBtn"
                 style="@style/button_text"
                 android:layout_width="fill_parent"

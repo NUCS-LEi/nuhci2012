@@ -2,24 +2,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:background="@drawable/layout_bg"
     android:orientation="vertical" >
 
     <TextView
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="0px"
         android:layout_marginTop="24dp"
-        android:paddingLeft="35px"
-        android:text="Set Wakeup Alarm:"
-        android:textSize="28sp"
+        android:layout_weight="1"
+        android:gravity="top|center_horizontal"
+        android:text="Set Wakeup Alarm"
+        android:textSize="24dp"
         android:textStyle="bold" />
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="252dp"
-        android:layout_gravity="center_horizontal"
+        android:layout_height="0px"
         android:layout_marginTop="24dp"
+        android:layout_weight="6"
+        android:gravity="top|center_horizontal"
         android:orientation="horizontal" >
 
         <LinearLayout
@@ -35,25 +35,64 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="24dp"
-            android:layout_weight="4" >
+            android:layout_weight="4"
+            android:orientation="vertical" >
 
-            <common.wheel.widget.WheelView
-                android:id="@+id/set_hour"
-                android:layout_width="0px"
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal" >
 
-            <common.wheel.widget.WheelView
-                android:id="@+id/set_minute"
-                android:layout_width="0px"
-                android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                <TextView
+                    style="@style/normal_text"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:text="Hour" />
 
-            <common.wheel.widget.WheelView
-                android:id="@+id/set_am_pm"
-                android:layout_width="0px"
+                <TextView
+                    style="@style/normal_text"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:text="Minute" />
+
+                <TextView
+                    style="@style/normal_text"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_weight="1"
+                    android:text="" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1" />
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <common.wheel.widget.WheelView
+                    android:id="@+id/set_hour"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <common.wheel.widget.WheelView
+                    android:id="@+id/set_minute"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+
+                <common.wheel.widget.WheelView
+                    android:id="@+id/set_am_pm"
+                    android:layout_width="0px"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1" />
+            </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
@@ -65,26 +104,20 @@
         </LinearLayout>
     </LinearLayout>
 
-    <Button
-        android:id="@+id/startBtn"
+    <LinearLayout
+        style="@style/menu_bg"
         android:layout_width="fill_parent"
-        android:layout_height="60dp"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="12dp"
-        android:paddingLeft="35px"
-        android:text="Start Tracking"
-        android:textSize="23sp" />
+        android:layout_height="70dp"
+        android:gravity="center|right"
+        android:orientation="horizontal" >
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="200px"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginTop="24dp"
-        android:layout_weight="1"
-        android:paddingLeft="35px"
-        android:text=""
-        android:textSize="28sp"
-        android:textStyle="bold" />
+        <Button
+            android:id="@+id/startBtn"
+            style="@style/button_text"
+            android:layout_width="135dp"
+            android:layout_height="60dp"
+            android:text="Done" >
+        </Button>
+    </LinearLayout>
 
 </LinearLayout>
