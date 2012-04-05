@@ -17,18 +17,15 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="2"
-        android:gravity="bottom"
-        android:paddingLeft="300px"
-        android:orientation="horizontal" >
+        android:layout_height="70dp"
+        android:gravity="center|right"
+        android:orientation="horizontal" 
+        style="@style/menu_bg">"
 
         <Button
             android:id="@+id/introductionStartBtn"
             style="@style/button_text"
             android:layout_width="150dp"
-            android:paddingLeft="25px"
-            android:paddingRight="25px"
             android:gravity="center"
             android:layout_height="60dp"
             android:text="Got it" />
