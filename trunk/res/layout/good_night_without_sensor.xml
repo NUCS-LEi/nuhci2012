@@ -31,13 +31,20 @@
         android:text="Alarm time:   6:00 AM"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="24sp" />
-
-    <Button
-        android:id="@+id/caffeineBackBtn"
-        style="@style/button_text"
-        android:layout_width="198dp"
-        android:layout_height="42dp"
-        android:paddingLeft="50px"
-        android:text="Stop Tracking" />
-
+	<LinearLayout
+        style="@style/menu_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="70dp"
+        android:gravity="bottom"
+        android:orientation="horizontal"
+        android:paddingLeft="250px" >
+	    
+	    <Button
+            android:id="@+id/caffeineBackBtn"
+            style="@style/button_text"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:layout_weight="1.00"
+            android:text="Stop Tracking" />
+	 </LinearLayout>
 </LinearLayout>
