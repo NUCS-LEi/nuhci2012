@@ -26,7 +26,7 @@ public class SettingQuestionActivity extends Activity {
 		// Bundle class with XML layout
 		setContentView(R.layout.question_setting);
 		// Bundle button in code with button in XML layout
-		cancelBtn = (Button) findViewById(R.id.questionCancelBtn);
+		
 		setBtn = (Button) findViewById(R.id.questionSetBtn);
 		coffeine=(CheckBox)findViewById(R.id.coffeineCheckBox);
 		alcohol=(CheckBox)findViewById(R.id.alcoholCheckBox);
@@ -40,15 +40,7 @@ public class SettingQuestionActivity extends Activity {
 		food.setChecked(true);
 		physical.setChecked(true);
 		stress.setChecked(true);
-		cancelBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent();
-				// Set navigation, first parameter is source, second is target.
-				i.setClass(SettingQuestionActivity.this, GoodSleepActivity.class);
-				startActivity(i);
-			}
-		});
+		
 		setBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
