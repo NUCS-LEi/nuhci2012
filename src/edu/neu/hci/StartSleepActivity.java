@@ -130,7 +130,7 @@ public class StartSleepActivity extends Activity {
 
 		wheel.addChangingListener(changedListener);
 		wheel.addScrollingListener(scrolledListener);
-		wheel.setCyclic(true);
+		wheel.setCyclic(false);
 		wheel.setInterpolator(new AnticipateOvershootInterpolator());
 	}
 
