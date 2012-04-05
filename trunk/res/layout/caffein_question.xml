@@ -15,7 +15,7 @@
         style="@style/normal_text"
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="1.89"
+        android:layout_weight="1.5"
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
@@ -24,8 +24,8 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="0.31"
+        android:layout_height="0dp"
+        android:layout_weight="2.5"
         android:gravity="center_horizontal"
         android:orientation="vertical" >
 
@@ -39,7 +39,7 @@
                 android:id="@+id/caffeineBtn1"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="None" />
 
@@ -47,7 +47,7 @@
                 android:id="@+id/caffeineBtn2"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="1-2" />
 
@@ -55,7 +55,7 @@
                 android:id="@+id/caffeineBtn3"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="3-4" />
 
@@ -71,7 +71,7 @@
                 android:id="@+id/caffeineBtn4"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="5-6" />
 
@@ -79,7 +79,7 @@
                 android:id="@+id/caffeineBtn5"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="More" />
 
@@ -87,7 +87,7 @@
                 android:id="@+id/caffeineBtn6"
                 style="@style/button_text"
                 android:layout_width="0px"
-                android:layout_height="wrap_content"
+                android:layout_height="65dp"
                 android:layout_weight="1"
                 android:text="Never" />
         </LinearLayout>
@@ -95,16 +95,16 @@
 
     <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="1.19"
+        android:layout_height="70dp"
         android:gravity="bottom"
-        android:orientation="horizontal" >
+        android:orientation="horizontal" 
+        style="@style/menu_bg">
 
         <Button
             android:id="@+id/caffeineBackBtn"
             style="@style/button_text"
             android:layout_width="0px"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:layout_weight="1.00"
             android:text="Back" />
 
@@ -112,7 +112,7 @@
             android:id="@+id/caffeineNextBtn"
             style="@style/button_text"
             android:layout_width="0px"
-            android:layout_height="51dp"
+            android:layout_height="60dp"
             android:layout_weight="1.00"
             android:text="Next" />
 

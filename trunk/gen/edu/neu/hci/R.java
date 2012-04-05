@@ -138,6 +138,7 @@ public final class R {
     }
     public static final class style {
         public static final int button_text=0x7f050002;
+        public static final int menu_bg=0x7f050003;
         public static final int normal_text=0x7f050001;
         public static final int title=0x7f050000;
     }
