@@ -77,6 +77,14 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
+            android:name=".summary.SmokingActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".summary.StressActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
             android:name=".summary.GoToBedTimeActivity"
             android:screenOrientation="portrait" >
         </activity>

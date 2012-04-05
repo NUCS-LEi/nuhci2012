@@ -79,7 +79,7 @@ public class StressQuestionActivity extends Activity {
 		Intent i = new Intent();
 		// Set navigation, first parameter is source, second is target.
 
-		i.setClass(StressQuestionActivity.this, QuestionnaireFeedbackActivity.class);
+		i.setClass(StressQuestionActivity.this, StartSleepActivity.class);
 
 		startActivity(i);
 	}
