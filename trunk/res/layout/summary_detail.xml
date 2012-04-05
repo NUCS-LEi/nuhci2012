@@ -44,16 +44,16 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:gravity="center" >
+        android:gravity="right" >
 
         <Button
             android:id="@+id/btnBack"
-            android:layout_width="fill_parent"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:paddingLeft="50px"
-            android:paddingRight="50px"
             android:paddingTop="15px"
-            android:text="Back" />
+            android:text="Got it!"
+            android:textSize="24sp" />
+
     </LinearLayout>
 
 </LinearLayout>
