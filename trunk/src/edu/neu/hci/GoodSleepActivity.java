@@ -6,6 +6,7 @@ import edu.neu.hci.summary.SleepScoreActivity;
 import edu.neu.hci.summary.SleepSummaryMain;
 import android.app.Activity;
 import android.content.Intent;
+import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,6 @@ import android.widget.Button;
 public class GoodSleepActivity extends Activity {
 	/** Called when the activity is first created. */
 	private Button startMySleepTrackingBtn;
-	private Button answerQuestionaireBtn;
 	private Button howIsMySleepBtn;
 
 	@Override
@@ -26,19 +26,9 @@ public class GoodSleepActivity extends Activity {
 		setContentView(R.layout.main);
 		// Bundle button in code with button in XML layout
 		startMySleepTrackingBtn = (Button) findViewById(R.id.startSleepTrackBtn);
-		answerQuestionaireBtn = (Button) findViewById(R.id.answerQuestionareBtn);
 		howIsMySleepBtn = (Button) findViewById(R.id.howIsMySleepBtn);
 		// Set button onClickListener
 		startMySleepTrackingBtn.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent i = new Intent();
-				// Set navigation, first parameter is source, second is target.
-				i.setClass(GoodSleepActivity.this, StartSleepActivity.class);
-				startActivity(i);
-			}
-		});
-		answerQuestionaireBtn.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				Intent i = new Intent();
