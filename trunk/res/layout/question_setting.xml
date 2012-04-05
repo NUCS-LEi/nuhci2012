@@ -137,7 +137,7 @@
             android:layout_height="60dp"
             android:paddingLeft="25dp"
             android:text="Done"
-            android:textSize="24sp" />
+            />
     </LinearLayout>
 
 </LinearLayout>
