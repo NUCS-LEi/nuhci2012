@@ -104,6 +104,10 @@
             android:name=".questionaire.SettingQuestionActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity
+            android:name=".questionaire.QuestionnaireFeedbackActivity"
+            android:screenOrientation="portrait" >
+        </activity>
         
     </application>
 
