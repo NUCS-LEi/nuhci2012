@@ -19,7 +19,7 @@
         android:gravity="left"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="How many alcoholic drinks you had today?"
+        android:text="How many alcoholic drinks did you have today?"
         android:textSize="28sp" />
 
     <LinearLayout
