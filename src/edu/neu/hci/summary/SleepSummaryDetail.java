@@ -60,6 +60,7 @@ public class SleepSummaryDetail extends Activity {
 
 			// Create stripes
 			int backgroundColor = (i % 2 == 0) ? Color.WHITE : Color.LTGRAY;
+			v.setBackgroundColor(backgroundColor);
 			statName.setBackgroundColor(backgroundColor);
 			statValue1.setBackgroundColor(backgroundColor);
 			statValue2.setBackgroundColor(backgroundColor);
