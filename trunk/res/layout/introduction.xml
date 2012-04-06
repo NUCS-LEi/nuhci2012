@@ -11,7 +11,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="\nGood sleep helps you to manage and modify your sleep. To benefit more of this application, you need to: 
+        android:text="\nGood sleep helps you to manage and modify your sleep. To benefit more from this application, you need to: 
         \n1) Set your wake up alarm within the application.\n2) Answer a short questionnaire every day about the parameters that may affect your sleep.\n3) Wear the activity detector sensor before going to bed.\nYou can check your sleep quality and the effect of different parameters on your sleep after waking up."
         android:textSize="20dp" />
 

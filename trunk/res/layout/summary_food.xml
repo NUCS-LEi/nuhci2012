@@ -18,7 +18,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Eat moderately for dinner. do not go to bed hungry. Do not eat within three hours of bedtime. Last night you ate more/less than your average." />
+        android:text="Eat moderately for dinner. Do not go to bed hungry. Do not eat within three hours of bedtime. Last night you ate more/less than your average." />
 
    <LinearLayout
         android:layout_width="fill_parent"
