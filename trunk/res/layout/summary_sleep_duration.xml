@@ -18,7 +18,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Keep a consistent amount of sleep each day, seven days a week. Last night you slept more than/less than your average sleep duration." />
+        android:text="Get a consistent amount of sleep each day, seven days a week. Last night you slept more /less than your average sleep duration." />
 
     <LinearLayout
         android:layout_width="fill_parent"
