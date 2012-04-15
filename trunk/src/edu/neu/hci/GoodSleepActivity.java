@@ -1,5 +1,8 @@
 package edu.neu.hci;
 
+import edu.neu.hci.db.DBAccessHelper;
+import edu.neu.hci.db.DBContentProvider;
+import edu.neu.hci.db.DatabaseDictionary;
 import edu.neu.hci.questionaire.CaffeineQuestionActivity;
 import edu.neu.hci.questionaire.SettingQuestionActivity;
 import edu.neu.hci.summary.SleepScoreActivity;
@@ -8,6 +11,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.opengl.Visibility;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -27,6 +32,13 @@ public class GoodSleepActivity extends Activity {
 		// Bundle button in code with button in XML layout
 		startMySleepTrackingBtn = (Button) findViewById(R.id.startSleepTrackBtn);
 		howIsMySleepBtn = (Button) findViewById(R.id.howIsMySleepBtn);
+
+	}
+
+	@Override
+	public void onResume() {
+		super.onResume();
+		DBAccessHelper.logUsage(getApplicationContext(), GoodSleepActivity.class.getName());
 		// Set button onClickListener
 		startMySleepTrackingBtn.setOnClickListener(new OnClickListener() {
 			@Override
@@ -46,5 +58,27 @@ public class GoodSleepActivity extends Activity {
 				startActivity(i);
 			}
 		});
+	}
+
+	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, 0, 0, "Back");
+		menu.add(0, 1, 1, "ExportDB");
+		return super.onCreateOptionsMenu(menu);
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+		case 0:
+			onBackPressed();
+			break;
+		case 1:
+			String s = DBContentProvider.exportLogStatDB();
+			android.util.Log.i(DatabaseDictionary.TAG, "Export=" + s);
+			break;
+		default:
+			break;
+		}
+		return true;
 	}
 }

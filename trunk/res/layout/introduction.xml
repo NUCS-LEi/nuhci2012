@@ -3,32 +3,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-    
-    <TextView
+
+    <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="10"
-        android:gravity="top"
-        android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="\nGood Sleep helps you manage and modify your sleep. To benefit the most from this application, you need to: 
+        android:layout_weight="10" >
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="0px"
+            android:layout_weight="10"
+            android:gravity="top"
+            android:paddingLeft="15dp"
+            android:paddingRight="15dp"
+            android:text="\nGood Sleep helps you manage and modify your sleep. To benefit the most from this application, you need to: 
         \n1) Set your wake up alarm in the application.\n2) Answer a short questionnaire every day about the parameters that can affect your sleep.\n3) Wear the activity detector sensor before going to bed.
         \nYou can then check your sleep quality and the effect of different parameters on your sleep after waking up."
-        android:textSize="20dp" />
+            android:textSize="20dp" />
+    </ScrollView>
 
     <LinearLayout
+        style="@style/menu_bg"
         android:layout_width="fill_parent"
         android:layout_height="70dp"
         android:gravity="center|right"
-        android:orientation="horizontal" 
-        style="@style/menu_bg">"
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/introductionStartBtn"
             style="@style/button_text"
             android:layout_width="150dp"
-            android:gravity="center"
             android:layout_height="60dp"
+            android:gravity="center"
             android:text="Got it" />
     </LinearLayout>
 

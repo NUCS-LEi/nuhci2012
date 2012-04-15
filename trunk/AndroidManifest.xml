@@ -9,6 +9,12 @@
     <application
         android:icon="@drawable/sleep"
         android:label="@string/app_name" >
+        <provider
+            android:name=".db.DBContentProvider"
+            android:authorities="edu.neu.hci.db"
+            android:readPermission="android.permission.permRead"
+            android:writePermission="android.permission.permWrite" />
+
         <activity
             android:name=".Introduction"
             android:label="@string/app_name"
@@ -116,7 +122,11 @@
             android:name=".questionaire.QuestionnaireFeedbackActivity"
             android:screenOrientation="portrait" >
         </activity>
-        
     </application>
+
+    <uses-permission android:name="android.permission.permRead" />
+    <uses-permission android:name="android.permission.permWrite" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
 </manifest>
