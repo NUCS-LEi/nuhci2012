@@ -3,12 +3,13 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical" >
-
+
     <TextView
         style="@style/title"
         android:layout_width="fill_parent"
-        android:layout_height="0px"
-        android:layout_weight="2"
+        android:layout_height="20dp"
+        android:layout_weight="1.23"
+        android:paddingTop="70dp"
         android:text="Good Sleep" />
 
     <LinearLayout
@@ -31,22 +32,39 @@
             android:layout_height="fill_parent"
             android:layout_weight="9"
             android:gravity="center_horizontal"
-            android:orientation="vertical" >
+            android:orientation="vertical"
+            android:paddingTop="5dp" >
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/pillow" />
+
+            <TextView
+                android:id="@+id/TextView01"
+                android:layout_width="100dp"
+                android:layout_height="34dp" />
 
             <Button
                 android:id="@+id/startSleepTrackBtn"
                 style="@style/button_text"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:layout_height="77dp"
+                android:paddingTop="13dp"
                 android:text="Start Sleep Tracking" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="100dp"
+                android:layout_height="15dp" />
 
             <Button
                 android:id="@+id/howIsMySleepBtn"
                 style="@style/button_text"
                 android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
+                android:layout_height="75dp"
+                android:paddingTop="13dp"
                 android:text="How Is My Sleep" />
         </LinearLayout>
 
