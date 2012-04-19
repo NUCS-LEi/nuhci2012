@@ -21,23 +21,21 @@
             android:layout_height="fill_parent"
             android:src="@drawable/images" />
     </LinearLayout>
-    
+
     <LinearLayout
+        style="@style/menu_bg"
         android:layout_width="fill_parent"
         android:layout_height="70dp"
         android:gravity="right|bottom"
-        android:orientation="horizontal" 
-        style="@style/menu_bg">
+        android:orientation="horizontal" >
 
-   
-    
-     <Button
-        android:id="@+id/btnBack"     
-        android:layout_width="150dp"
-        android:layout_height="60dp"
-        android:text="Got it!"
-        android:textSize="20sp" />
-     </LinearLayout>
-    
+        <Button
+            android:id="@+id/btnBack"
+            style="@style/button_text"
+            android:layout_width="150dp"
+            android:layout_height="60dp"
+            android:text="Got it!"
+            android:textSize="20sp" />
+    </LinearLayout>
 
 </LinearLayout>

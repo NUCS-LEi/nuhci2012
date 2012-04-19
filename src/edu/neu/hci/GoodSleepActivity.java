@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 // Every display page needs to extends Activity, also register in AndroidManifest.xml, 
 // you can copy it like other activities and change name.
@@ -23,6 +25,8 @@ public class GoodSleepActivity extends Activity {
 	/** Called when the activity is first created. */
 	private Button startMySleepTrackingBtn;
 	private Button howIsMySleepBtn;
+	private TextView title;
+	private ImageView img;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -32,12 +36,26 @@ public class GoodSleepActivity extends Activity {
 		// Bundle button in code with button in XML layout
 		startMySleepTrackingBtn = (Button) findViewById(R.id.startSleepTrackBtn);
 		howIsMySleepBtn = (Button) findViewById(R.id.howIsMySleepBtn);
+		title = (TextView) findViewById(R.id.title);
+		img = (ImageView) findViewById(R.id.imageView1);
 
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		title.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				goIntro();
+			}
+		});
+		img.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				goIntro();
+			}
+		});
 		DBAccessHelper.logUsage(getApplicationContext(), GoodSleepActivity.class.getName());
 		// Set button onClickListener
 		startMySleepTrackingBtn.setOnClickListener(new OnClickListener() {
@@ -80,5 +98,12 @@ public class GoodSleepActivity extends Activity {
 			break;
 		}
 		return true;
+	}
+
+	private void goIntro() {
+		Intent i = new Intent();
+		i.putExtra("from", true);
+		i.setClass(GoodSleepActivity.this, Introduction.class);
+		startActivity(i);
 	}
 }

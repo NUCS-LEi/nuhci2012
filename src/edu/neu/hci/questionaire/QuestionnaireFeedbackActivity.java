@@ -1,14 +1,13 @@
 package edu.neu.hci.questionaire;
 
-import edu.neu.hci.GoodSleepActivity;
-import edu.neu.hci.R;
-import edu.neu.hci.alarm.StartSleepActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import edu.neu.hci.R;
+import edu.neu.hci.alarm.StartSleepActivity;
 
 public class QuestionnaireFeedbackActivity extends Activity {
 	private Button feedBackModifyBtn;
@@ -50,7 +49,7 @@ public class QuestionnaireFeedbackActivity extends Activity {
 	private void naviModify() {
 		Intent i = new Intent();
 		// Set navigation, first parameter is source, second is target.
-		i.setClass(QuestionnaireFeedbackActivity.this, CaffeineQuestionActivity.class);
+		i.setClass(QuestionnaireFeedbackActivity.this, SettingQuestionActivity.class);
 		startActivity(i);
 	}
 }
