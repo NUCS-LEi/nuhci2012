@@ -8,7 +8,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.telephony.TelephonyManager;
-import edu.neu.hci.StartSleepActivity;
+import edu.neu.hci.alarm.StartSleepActivity;
 import edu.neu.hci.questionaire.ActivityQuestionActivity;
 import edu.neu.hci.questionaire.AlcoholQuestionActivity;
 import edu.neu.hci.questionaire.CaffeineQuestionActivity;
@@ -120,7 +120,8 @@ public class DBAccessHelper {
 			cv.put("QuestionType", type);
 			c.getContentResolver().insert(DBContentProvider.QUESTION_CONTENT_URI, cv);
 		} else
-			c.getContentResolver().update(DBContentProvider.QUESTION_CONTENT_URI, cv, "CreateDate=? and QuestionType=?", new String[] { createDate, type });
+			c.getContentResolver().update(DBContentProvider.QUESTION_CONTENT_URI, cv, "CreateDate=? and QuestionType=?",
+					new String[] { createDate, type });
 		return 1;
 	}
 
@@ -136,6 +137,44 @@ public class DBAccessHelper {
 		else {
 			cursor.moveToFirst();
 			return cursor.getInt(0);
+		}
+	}
+
+	public static int insertOrUpdateSleepTime(Context c, String goToBedTime, String wakeUpTime) {
+		ContentValues cv = new ContentValues();
+		Date date = new Date();
+		if (date.getHours() < 12)
+			date.setTime(date.getTime() - 12 * 3600 * 1000);
+		String createDate = DatabaseDictionary.normalDateFormat.format(date);
+		String lastModDate = DatabaseDictionary.lastModDateFormat.format(new Date());
+		cv.put("GoToBedTime", goToBedTime);
+		cv.put("WakeUpTime", wakeUpTime);
+		cv.put("LastModDate", lastModDate);
+		cv.put("SleepDuration", "");
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE_NAME + " where CreateDate='"
+				+ createDate + "';");
+		if (cursor.getCount() == 0) {
+			cv.put("CreateDate", createDate);
+			c.getContentResolver().insert(DBContentProvider.SLEEP_TIME_CONTENT_URI, cv);
+		} else {
+			// int r =
+			// c.getContentResolver().update(DBContentProvider.SLEEP_TIME_CONTENT_URI,
+			// cv, "CreateDate=?", new String[] { createDate });
+			DBContentProvider.execSQL(c, "update " + DatabaseDictionary.SLEEP_TIME_TABLE_NAME + " set GotoBedTime='" + goToBedTime + "',WakeUpTime='"
+					+ wakeUpTime + "',SleepDuration='',LastModDate='" + lastModDate + "' where CreateDate='" + createDate + "'");
+			android.util.Log.i(DatabaseDictionary.TAG, "+++++++" + wakeUpTime + "+++++++" + createDate + "++");
+		}
+		return 1;
+	}
+
+	public static String getLastSleepTime(Context c) {
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE_NAME
+				+ " order by CreateDate desc limit 1;");
+		if (cursor.getCount() == 0)
+			return null;
+		else {
+			cursor.moveToFirst();
+			return cursor.getString(2);
 		}
 	}
 }

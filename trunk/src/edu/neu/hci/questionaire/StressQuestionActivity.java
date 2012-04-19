@@ -10,7 +10,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
 import edu.neu.hci.R;
-import edu.neu.hci.StartSleepActivity;
+import edu.neu.hci.alarm.StartSleepActivity;
 import edu.neu.hci.db.DBAccessHelper;
 import edu.neu.hci.db.DatabaseDictionary;
 

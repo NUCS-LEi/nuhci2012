@@ -403,7 +403,7 @@ public class WheelView extends View {
 		}
 
 		if (centerDrawable == null) {
-			centerDrawable = getContext().getResources().getDrawable(R.drawable.wheel_val);
+			centerDrawable = getContext().getResources().getDrawable(R.xml.wheel_val);
 		}
 
 		if (topShadow == null) {
@@ -414,7 +414,7 @@ public class WheelView extends View {
 			bottomShadow = new GradientDrawable(Orientation.BOTTOM_TOP, SHADOWS_COLORS);
 		}
 
-		setBackgroundResource(R.drawable.wheel_bg);
+		setBackgroundResource(R.xml.wheel_bg);
 	}
 
 	/**
