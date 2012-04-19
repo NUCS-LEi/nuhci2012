@@ -3,23 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
     <TextView
         style="@style/title"
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="1.47"
         android:text="Have a Good Sleep!" />
-
-<TextView
-    android:layout_width="fill_parent"
-    android:layout_height="0px"
-    android:layout_weight="6.73"
-    android:gravity="top"
-    android:paddingLeft="15dp"
-    android:paddingRight="15dp"
-    android:text="Please put your phone in the corner of your bed and Keep it there during your entire sleep time."
-    android:textSize="25dp" />
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="0px"
+        android:layout_weight="6.73"
+        android:gravity="top"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:text="Please put your phone in the corner of your bed and Keep it there during your entire sleep time."
+        android:textSize="25dp" />
 
     <TextView
         android:id="@+id/textView1"
@@ -30,21 +30,22 @@
         android:text="Alarm time:   6:00 AM"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="24sp" />
-	<LinearLayout
+
+    <LinearLayout
         style="@style/menu_bg"
         android:layout_width="fill_parent"
         android:layout_height="70dp"
-        android:gravity="bottom"
+        android:gravity="center|left"
         android:orientation="horizontal"
-        android:paddingLeft="250px" >
-	    
-	    <Button
+        android:paddingLeft="5px" >
+
+        <Button
             android:id="@+id/stopTrackingBtn"
             style="@style/button_text"
-            android:layout_width="150dp"
+            android:layout_width="wrap_content"
             android:layout_height="60dp"
-            android:layout_weight="1.00"
+            android:gravity="center"
             android:text="Stop Tracking" />
-	 </LinearLayout>
-	 
+    </LinearLayout>
+
 </LinearLayout>

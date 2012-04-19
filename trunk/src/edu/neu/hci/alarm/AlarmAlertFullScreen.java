@@ -41,7 +41,6 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
-import edu.neu.hci.AlarmReceiver;
 import edu.neu.hci.R;
 
 /**

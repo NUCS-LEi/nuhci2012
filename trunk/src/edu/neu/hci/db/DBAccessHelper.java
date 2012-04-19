@@ -13,6 +13,7 @@ import edu.neu.hci.questionaire.ActivityQuestionActivity;
 import edu.neu.hci.questionaire.AlcoholQuestionActivity;
 import edu.neu.hci.questionaire.CaffeineQuestionActivity;
 import edu.neu.hci.questionaire.FoodQuestionActivity;
+import edu.neu.hci.questionaire.QuestionnaireFeedbackActivity;
 import edu.neu.hci.questionaire.SmokeQuestionActivity;
 import edu.neu.hci.questionaire.StressQuestionActivity;
 
@@ -64,7 +65,7 @@ public class DBAccessHelper {
 				l.add(ActivityQuestionActivity.class.getName());
 			if (b[5] == true)
 				l.add(StressQuestionActivity.class.getName());
-			l.add(StartSleepActivity.class.getName());
+			l.add(QuestionnaireFeedbackActivity.class.getName());
 			return l;
 		} else
 			return null;
