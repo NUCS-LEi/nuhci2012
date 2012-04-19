@@ -64,13 +64,12 @@ public class SettingQuestionActivity extends Activity {
 		String last = DBAccessHelper.getLastUsage(getApplicationContext(), SettingQuestionActivity.class.getName());
 		if (last == null) {
 			DBAccessHelper.logUsage(getApplicationContext(), SettingQuestionActivity.class.getName());
-
 			return true;
 		} else
 			try {
 				if (DatabaseDictionary.exactDateFormat.parse(last) != null
 						&& System.currentTimeMillis() - DatabaseDictionary.exactDateFormat.parse(last).getTime() > 1000 * 60) {
-					DBAccessHelper.logUsage(getApplicationContext(), SettingQuestionActivity.class.toString());
+					DBAccessHelper.logUsage(getApplicationContext(), SettingQuestionActivity.class.getName());
 					return true;
 				} else {
 					return false;

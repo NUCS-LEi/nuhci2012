@@ -2,7 +2,7 @@ package edu.neu.hci.questionaire;
 
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
-import edu.neu.hci.StartSleepActivity;
+import edu.neu.hci.alarm.StartSleepActivity;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

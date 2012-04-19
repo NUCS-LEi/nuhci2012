@@ -45,6 +45,8 @@ public class DBContentProvider extends ContentProvider {
 	public static final Uri QUESTION_SETTING_CONTENT_URI = Uri.parse(CONTENT + "/" + DatabaseDictionary.QUESTION_SETTING_TABLE_NAME);
 	public static final Uri QUESTION_CONTENT_URI = Uri.parse(CONTENT + "/" + DatabaseDictionary.QUESTION_TABLE_NAME);
 	public static final Uri USAGE_LOG_CONTENT_URI = Uri.parse(CONTENT + "/" + DatabaseDictionary.USAGE_LOG_TABLE_NAME);
+	public static final Uri SLEEP_TIME_CONTENT_URI = Uri.parse(CONTENT + "/" + DatabaseDictionary.SLEEP_TIME_TABLE_NAME);
+	public static final Uri ALARM_CONTENT_URI = Uri.parse(CONTENT + "/" + DatabaseDictionary.ALARM_TABLE_NAME);
 	private static final Uri LOCAL_SCHEMA_CONTENT_URI = Uri.parse(CONTENT + "/" + DatabaseDictionary.LOCAL_SCHEMA_TABLE_NAME);
 	private static final Uri RAW_QUERY_CONTENT_URI = Uri.parse(CONTENT + "/" + RAW_QUERY);
 	private static final Uri EXEC_QUERY_CONTENT_URI = Uri.parse(CONTENT + "/" + EXEC_QUERY);
