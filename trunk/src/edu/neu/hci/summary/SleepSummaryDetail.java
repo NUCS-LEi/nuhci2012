@@ -55,36 +55,38 @@ public class SleepSummaryDetail extends Activity {
 			View v = LayoutInflater.from(this).inflate(R.layout.summary_detail_item, null);
 
 			TextView statName = (TextView) v.findViewById(R.id.statName);
+			ImageView img = (ImageView) findViewById(R.id.img);
 			ImageView statValue1 = (ImageView) v.findViewById(R.id.statValue1);
 			ImageView statValue2 = (ImageView) v.findViewById(R.id.statValue2);
 
 			// Create stripes
 			int backgroundColor = (i % 2 == 0) ? Color.WHITE : Color.LTGRAY;
 			v.setBackgroundColor(backgroundColor);
+			img.setBackgroundColor(backgroundColor);
 			statName.setBackgroundColor(backgroundColor);
 			statValue1.setBackgroundColor(backgroundColor);
 			statValue2.setBackgroundColor(backgroundColor);
 
-			if (summaryDetail == null || summaryDetail.size() <= i) {
-				statName.setText("");
-				// statValue.setText("");
-			} else {
-					statName.setText(summaryDetail.get(i)[0]);
-					if (i % 2 == 0)
-						statValue1.setImageResource(R.drawable.down);
-					else
-						statValue1.setImageResource(R.drawable.up);
-					if (i % 3 == 0)
-						statValue2.setImageResource(R.drawable.t_down);
-					else
-						statValue2.setImageResource(R.drawable.t_up);
-				// if (summaryDetail.get(i)[1] == null ||
-				// summaryDetail.get(i)[1].equals("") ||
-				// summaryDetail.get(i)[1].equals("null"))
-				// statValue.setText(" ");
-				// else
-				// statValue.setText(summaryDetail.get(i)[1]);
-			}
+			// if (summaryDetail == null || summaryDetail.size() <= i) {
+			// statName.setText("");
+			// // statValue.setText("");
+			// } else {
+			statName.setText(summaryDetail.get(i)[0]+i);
+			if (i % 2 == 0)
+				statValue1.setImageResource(R.drawable.down);
+			else
+				statValue1.setImageResource(R.drawable.up);
+			if (i % 3 == 0)
+				statValue2.setImageResource(R.drawable.t_down);
+			else
+				statValue2.setImageResource(R.drawable.t_up);
+			// if (summaryDetail.get(i)[1] == null ||
+			// summaryDetail.get(i)[1].equals("") ||
+			// summaryDetail.get(i)[1].equals("null"))
+			// statValue.setText(" ");
+			// else
+			// statValue.setText(summaryDetail.get(i)[1]);
+			// }
 			v.setTag(String.valueOf(i));
 			v.setOnClickListener(new OnClickListener() {
 				@Override
