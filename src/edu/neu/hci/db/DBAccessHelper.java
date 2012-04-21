@@ -190,6 +190,7 @@ public class DBAccessHelper {
 		c.getContentResolver().insert(DBContentProvider.SUMMARY_POINT_URI, cv);
 		return 1;
 	}
+
 	public static int insertAccelPoint(Context c, AccelPoint point) {
 		ContentValues cv = new ContentValues();
 		if (point == null)
@@ -203,5 +204,63 @@ public class DBAccessHelper {
 		cv.put("Compressed", point.mCompressed);
 		c.getContentResolver().insert(DBContentProvider.ACCEL_POINT_URI, cv);
 		return 1;
+	}
+
+	public static ArrayList<double[]> getSummaryPoints(Context c) {
+		ArrayList<double[]> al = new ArrayList<double[]>();
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SUMMARY_POINT_TABLE);
+		if (cursor.getCount() == 0)
+			return null;
+		else {
+			double[] time = new double[cursor.getCount()];
+			double[] value = new double[cursor.getCount()];
+			double adjustValue = 0;
+			int count = 0;
+			int[] count_each = { 0, 0, 0 };
+			cursor.moveToFirst();
+			while (!cursor.isAfterLast()) {
+				// if (count < Global.GROUP_MINUTES) {
+				// time[cursor.getPosition()] = cursor.getPosition();
+				// if (cursor.getDouble(4) > Global.WAKE_THRESHOLD)
+				// count_each[0]++;
+				// else if (cursor.getDouble(4) > Global.LIGHT_SLEEP_THRESHOLD)
+				// count_each[1]++;
+				// else
+				// count_each[2]++;
+				// } else {
+				// android.util.Log.i(Global.TAG, "At " + cursor.getPosition() +
+				// " count_each[0]=" + count_each[0] + " count_each[1]="
+				// + count_each[1] + " count_each[2]=" + count_each[2]);
+				// if (count_each[0] > count_each[1] && count_each[0] >
+				// count_each[2])
+				// adjustValue = Global.WAKE_THRESHOLD;
+				// else if (count_each[1] > count_each[0] && count_each[1] >
+				// count_each[2])
+				// adjustValue = Global.LIGHT_SLEEP_THRESHOLD;
+				// else
+				// adjustValue = Global.DEEP_SLEEP;
+				// for (int i = cursor.getPosition() - Global.GROUP_MINUTES; i <
+				// Global.GROUP_MINUTES; i++) {
+				// value[i] = adjustValue;
+				// }
+				// count = 0;
+				// count_each[0] = 0;
+				// count_each[1] = 0;
+				// count_each[2] = 0;
+				// }
+				time[cursor.getPosition()] = cursor.getPosition();
+				if (cursor.getDouble(4) > Global.WAKE_THRESHOLD)
+					adjustValue = Global.WAKE_THRESHOLD;
+				else if (cursor.getDouble(4) > Global.LIGHT_SLEEP_THRESHOLD)
+					adjustValue = Global.LIGHT_SLEEP_THRESHOLD;
+				else
+					adjustValue = Global.DEEP_SLEEP;
+				value[cursor.getPosition()] = adjustValue;
+				cursor.moveToNext();
+			}
+			al.add(time);
+			al.add(value);
+			return al;
+		}
 	}
 }

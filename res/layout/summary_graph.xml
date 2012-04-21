@@ -16,10 +16,20 @@
         android:paddingBottom="10dp"
         android:paddingTop="10dp" >
 
-        <ImageView
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:src="@drawable/images" />
+        <ProgressBar
+            android:id="@+id/pBar"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="60dp" >
+        </ProgressBar>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:text="Loading..."
+            android:textSize="25dp" />
     </LinearLayout>
 
     <LinearLayout
