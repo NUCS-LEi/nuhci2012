@@ -1,44 +1,76 @@
 package edu.neu.hci.summary;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
-import android.widget.TextView;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
+import edu.neu.hci.db.DBAccessHelper;
+import edu.neu.hci.graph.DrawGraph;
+import edu.neu.hci.graph.GraphData;
 
 public class SleepSummaryGraph extends Activity {
+	private Button btn;
 
-	private Button btnBack;
-	private TextView title;
-
-	public void onCreate(Bundle savedInstanceState) {
+	@Override
+	protected void onCreate(Bundle savedInstanceState) {
+		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.summary_graph);
-
-		btnBack = (Button) findViewById(R.id.btnBack);
-		btnBack.setOnClickListener(backBtnListener);
+		btn = (Button) findViewById(R.id.btnBack);
 	}
 
-	public void onResume() {
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
 		super.onResume();
-		refreshGrid();
+		btn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				Intent i = new Intent();
+				i.setClass(getApplicationContext(), GoodSleepActivity.class);
+				startActivity(i);
+				SleepSummaryGraph.this.finish();
+			}
+		});
+		new aTask().execute(null, null, null);
 	}
 
-	private void refreshGrid() {
-		
-	}
-
-	private OnClickListener backBtnListener = new OnClickListener() {
+	public class aTask extends AsyncTask<Void, Void, GraphData> {
 
 		@Override
-		public void onClick(View arg0) {
-			Intent intent = new Intent(SleepSummaryGraph.this, GoodSleepActivity.class);
-			startActivity(intent);
+		protected void onPostExecute(GraphData data) {
+			super.onPostExecute(data);
+			if (data != null) {
+				DrawGraph graph = new DrawGraph();
+				Intent intent = graph.execute(SleepSummaryGraph.this, data);
+				if (intent != null) {
+					startActivity(intent);
+				}
+				SleepSummaryGraph.this.finish();
+			}
 		}
 
-	};
+		@Override
+		protected GraphData doInBackground(Void... arg0) {
+			List<double[]> dataList = new ArrayList<double[]>();
+			boolean[] entries = { true };
+			if (DBAccessHelper.getSummaryPoints(getApplicationContext()) != null) {
+				dataList.addAll(DBAccessHelper.getSummaryPoints(getApplicationContext()));
+				GraphData data = new GraphData(dataList, entries);
+				return data;
+			} else
+				return null;
+		}
+	}
+
 }

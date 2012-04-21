@@ -160,6 +160,12 @@
             android:name=".alarm.WakeUpActivity"
             android:screenOrientation="portrait" >
         </activity>
+        <activity android:name=".graph.Graph" >
+        </activity>
+        <activity
+            android:name="org.achartengine.GraphicalActivity"
+            android:process=":weightgraph"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
