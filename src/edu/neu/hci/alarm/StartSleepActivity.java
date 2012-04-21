@@ -277,7 +277,6 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 	}
 
 	private int saveAlarm() {
-		android.util.Log.i(DatabaseDictionary.TAG, "--saveAlarm called: alert=" + mAlarmPref.getAlert());
 		Alarms.deleteAlarm(getApplicationContext(), 0);
 		Alarm alarm = new Alarm();
 		alarm.id = 0;
@@ -289,7 +288,7 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 			e.printStackTrace();
 		}
 
-		alarm.vibrate = false;
+		alarm.vibrate = true;
 		alarm.alert = mAlarmPref.getAlert();
 		Alarms.addAlarm(getApplicationContext(), alarm);
 		return 0;
