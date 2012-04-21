@@ -88,14 +88,14 @@ public class Alarms {
 	 */
 	public static long addAlarm(Context context, Alarm alarm) {
 		android.util.Log.i(DatabaseDictionary.TAG, "------add:" + alarm.hour);
-		ContentValues values = createContentValues(alarm, 0);
+		ContentValues values = createContentValues(alarm, alarm.id);
 		Uri uri = context.getContentResolver().insert(DBContentProvider.ALARM_CONTENT_URI, values);
-		alarm.id = (int) ContentUris.parseId(uri);
-
+		// alarm.id = (int) ContentUris.parseId(uri);
+		//
 		long timeInMillis = calculateAlarm(alarm);
-		if (alarm.enabled) {
-			clearSnoozeIfNeeded(context, timeInMillis);
-		}
+		// if (alarm.enabled) {
+		// clearSnoozeIfNeeded(context, timeInMillis);
+		// }
 		setNextAlert(context);
 		return timeInMillis;
 	}
@@ -152,21 +152,16 @@ public class Alarms {
 		// Set the alarm_time value if this alarm does not repeat. This will be
 		// used later to disable expire alarms.
 		long time = 0;
-		if (!alarm.daysOfWeek.isRepeatSet()) {
-			time = calculateAlarm(alarm);
-		}
+		time = calculateAlarm(alarm);
 		String[] columns = DatabaseDictionary.getTableCols().get(DatabaseDictionary.ALARM_TABLE_NAME);
 		values.put(columns[0], id);
-		values.put(columns[5], alarm.enabled ? 1 : 0);
+		values.put(columns[4], alarm.enabled ? 1 : 0);
 		values.put(columns[1], alarm.hour);
 		values.put(columns[2], alarm.minutes);
-		values.put(columns[4], alarm.time);
-		values.put(columns[3], alarm.daysOfWeek.getCoded());
-		values.put(columns[6], alarm.vibrate);
-		values.put(columns[7], alarm.label);
-
+		values.put(columns[3], alarm.time);
+		values.put(columns[5], alarm.vibrate);
 		// A null alert Uri indicates a silent alarm.
-		values.put(columns[8], alarm.alert == null ? ALARM_ALERT_SILENT : alarm.alert.toString());
+		values.put(columns[6], alarm.alert == null ? ALARM_ALERT_SILENT : alarm.alert.toString());
 
 		return values;
 	}
@@ -260,12 +255,9 @@ public class Alarms {
 		// value in Alarm may be old.
 		if (enabled) {
 			long time = 0;
-			if (!alarm.daysOfWeek.isRepeatSet()) {
-				time = calculateAlarm(alarm);
-			}
+			time = calculateAlarm(alarm);
 			values.put(columns[4], time);
 		} else {
-			// Clear the snooze if the id matches.
 			disableSnoozeAlert(context, alarm.id);
 		}
 
@@ -286,13 +278,13 @@ public class Alarms {
 					Alarm a = new Alarm(cursor);
 					// A time of 0 indicates this is a repeating alarm, so
 					// calculate the time to get the next alert.
-//					if (a.time == 0) {
-						a.time = calculateAlarm(a);
-//					} else if (a.time < now) {
-//						// Expired alarm, disable it and move along.
-//						enableAlarmInternal(context, a, false);
-//						continue;
-//					}
+					// if (a.time == 0) {
+					a.time = calculateAlarm(a);
+					// } else if (a.time < now) {
+					// // Expired alarm, disable it and move along.
+					// enableAlarmInternal(context, a, false);
+					// continue;
+					// }
 					if (a.time < minTime) {
 						minTime = a.time;
 						alarm = a;
@@ -365,7 +357,7 @@ public class Alarms {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(atTimeInMillis);
 		String timeString = formatDayAndTime(context, c);
-		Log.i(DatabaseDictionary.TAG, "Alarm Set");
+		Log.i(DatabaseDictionary.TAG, "Alarm Set at: " + atTimeInMillis + " hour:" + alarm.hour + " min:" + alarm.minutes);
 		saveNextAlarm(context, timeString);
 	}
 
@@ -467,14 +459,14 @@ public class Alarms {
 	}
 
 	private static long calculateAlarm(Alarm alarm) {
-		return calculateAlarm(alarm.hour, alarm.minutes, alarm.daysOfWeek).getTimeInMillis();
+		return calculateAlarm(alarm.hour, alarm.minutes).getTimeInMillis();
 	}
 
 	/**
 	 * Given an alarm in hours and minutes, return a time suitable for setting
 	 * in AlarmManager.
 	 */
-	static Calendar calculateAlarm(int hour, int minute, Alarm.DaysOfWeek daysOfWeek) {
+	static Calendar calculateAlarm(int hour, int minute) {
 
 		// start with now
 		Calendar c = Calendar.getInstance();
@@ -492,14 +484,11 @@ public class Alarms {
 		c.set(Calendar.SECOND, 0);
 		c.set(Calendar.MILLISECOND, 0);
 
-		int addDays = daysOfWeek.getNextAlarm(c);
-		if (addDays > 0)
-			c.add(Calendar.DAY_OF_WEEK, addDays);
 		return c;
 	}
 
-	static String formatTime(final Context context, int hour, int minute, Alarm.DaysOfWeek daysOfWeek) {
-		Calendar c = calculateAlarm(hour, minute, daysOfWeek);
+	static String formatTime(final Context context, int hour, int minute) {
+		Calendar c = calculateAlarm(hour, minute);
 		return formatTime(context, c);
 	}
 

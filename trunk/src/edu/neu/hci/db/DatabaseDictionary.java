@@ -9,6 +9,8 @@ import android.os.Environment;
 public class DatabaseDictionary {
 	public final static int DATABASE_VERSION = 1;
 	public static String TAG = "GoodSleep";
+	public static String ALARM = "edu.neu.hci.ALARM";
+	public static long SNOOZE_TIME = 1 * 60 * 1000;
 
 	public static final String CAFFEINE = "caffeine";
 	public static final String ALCOHOL = "alcohol";
@@ -64,9 +66,8 @@ public class DatabaseDictionary {
 							+ "SleepDuration TEXT DEFAULT NULL," + "LastModDate TEXT DEFAULT NULL," + "PRIMARY KEY (CreateDate)" },
 			{
 					ALARM_TABLE_NAME,
-					"ID TEXT NOT NULL," + "Hour TEXT DEFAULT NULL," + "Minutes TEXT DEFAULT NULL," + "DaysOfWeek TEXT DEFAULT NULL,"
-							+ "AlarmTime TEXT DEFAULT NULL," + "Enabled TEXT DEFAULT NULL," + "Vibrate TEXT DEFAULT NULL,"
-							+ "Message TEXT DEFAULT NULL," + "Alert TEXT DEFAULT NULL," + "PRIMARY KEY (ID)" } };
+					"ID TEXT NOT NULL," + "Hour TEXT DEFAULT NULL," + "Minutes TEXT DEFAULT NULL," + "AlarmTime TEXT DEFAULT NULL,"
+							+ "Enabled TEXT DEFAULT NULL," + "Vibrate TEXT DEFAULT NULL," + "Alert TEXT DEFAULT NULL," + "PRIMARY KEY (ID)" } };
 
 	public static HashMap<String, String[]> getTableCols() {
 		HashMap<String, String[]> tableCols = new HashMap<String, String[]>();
@@ -74,7 +75,7 @@ public class DatabaseDictionary {
 		String[] questionCols = { "PhoneID", "CreateDate", "QuestionType", "QuestionValue", "LastModDate" };
 		String[] usage_logCols = { "TimeStamp", "Activity" };
 		String[] sleep_timeCols = { "CreateDate", "GoToBedTime", "WakeUpTime", "SleepDuration", "LastModDate" };
-		String[] alarmCols = { "ID", "Hour", "Minutes", "DaysOfWeek", "AlarmTime", "Enabled", "Vibrate", "Message", "Alert" };
+		String[] alarmCols = { "ID", "Hour", "Minutes", "AlarmTime", "Enabled", "Vibrate", "Alert" };
 		tableCols.put(QUESTION_SETTING_TABLE_NAME, question_settingCols);
 		tableCols.put(QUESTION_TABLE_NAME, questionCols);
 		tableCols.put(USAGE_LOG_TABLE_NAME, usage_logCols);
