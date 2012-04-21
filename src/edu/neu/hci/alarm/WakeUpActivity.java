@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
 import edu.neu.hci.db.DatabaseDictionary;
@@ -26,7 +27,7 @@ public class WakeUpActivity extends Activity {
 		stop = (Button) findViewById(R.id.stop);
 		dc = (GSDigitalClock) findViewById(R.id.DigitalClock1);
 		Bundle bundle = this.getIntent().getExtras();
-		orignal_alarm = (Alarm) bundle.get(DatabaseDictionary.ALARM);
+		orignal_alarm = (Alarm) bundle.get(Global.ALARM);
 		dc.set24(false);
 	}
 
@@ -57,7 +58,7 @@ public class WakeUpActivity extends Activity {
 		alarm.id = 1;
 		alarm.enabled = true;
 		Date date = new Date();
-		date.setTime(date.getTime() + DatabaseDictionary.SNOOZE_TIME);
+		date.setTime(date.getTime() + Global.SNOOZE_TIME);
 		alarm.hour = date.getHours();
 		alarm.minutes = date.getMinutes();
 		alarm.vibrate = true;
@@ -67,7 +68,7 @@ public class WakeUpActivity extends Activity {
 			alarm.alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		Alarms.addAlarm(getApplicationContext(), alarm);
 		Toast toast;
-		toast = Toast.makeText(getApplicationContext(), String.format("Snooze for %d minutes", DatabaseDictionary.SNOOZE_TIME / 60000),
+		toast = Toast.makeText(getApplicationContext(), String.format("Snooze for %d minutes", Global.SNOOZE_TIME / 60000),
 				Toast.LENGTH_LONG);
 		toast.show();
 	}

@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.CheckBox;
+import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.Introduction;
 import edu.neu.hci.R;
@@ -67,8 +68,8 @@ public class SettingQuestionActivity extends Activity {
 			return true;
 		} else
 			try {
-				if (DatabaseDictionary.exactDateFormat.parse(last) != null
-						&& System.currentTimeMillis() - DatabaseDictionary.exactDateFormat.parse(last).getTime() > 1000 * 60) {
+				if (Global.exactDateFormat.parse(last) != null
+						&& System.currentTimeMillis() - Global.exactDateFormat.parse(last).getTime() > 1000 * 60) {
 					DBAccessHelper.logUsage(getApplicationContext(), SettingQuestionActivity.class.getName());
 					return true;
 				} else {

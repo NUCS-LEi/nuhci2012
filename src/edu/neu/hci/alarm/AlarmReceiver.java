@@ -20,8 +20,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Parcel;
-import android.util.Log;
-import edu.neu.hci.db.DatabaseDictionary;
+import edu.neu.hci.Global;
 
 /**
  * Glue class: connects AlarmAlert IntentReceiver to AlarmAlert activity. Passes
@@ -36,7 +35,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
 	@Override
 	public void onReceive(Context context, Intent intent) {
-		Log.i(DatabaseDictionary.TAG, "+++AlarmReceiver" + intent.getAction());
 		if (Alarms.ALARM_ALERT_ACTION.equals(intent.getAction())) {
 			AlarmAlertWakeLock.acquireCpuWakeLock(context);
 			Alarm alarm = null;
@@ -57,7 +55,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 			context.startService(playAlarm);
 			Intent i = new Intent();
 			i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			i.putExtra(DatabaseDictionary.ALARM, alarm);
+			i.putExtra(Global.ALARM, alarm);
 			i.setClass(context, WakeUpActivity.class);
 			context.startActivity(i);
 		}

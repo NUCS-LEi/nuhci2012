@@ -16,7 +16,6 @@ import android.net.Uri;
 import android.os.Parcel;
 import android.provider.Settings;
 import android.text.format.DateFormat;
-import android.util.Log;
 import edu.neu.hci.db.DBContentProvider;
 import edu.neu.hci.db.DatabaseDictionary;
 
@@ -87,15 +86,9 @@ public class Alarms {
 	 * Creates a new Alarm and fills in the given alarm's id.
 	 */
 	public static long addAlarm(Context context, Alarm alarm) {
-		android.util.Log.i(DatabaseDictionary.TAG, "------add:" + alarm.hour);
 		ContentValues values = createContentValues(alarm, alarm.id);
 		Uri uri = context.getContentResolver().insert(DBContentProvider.ALARM_CONTENT_URI, values);
-		// alarm.id = (int) ContentUris.parseId(uri);
-		//
 		long timeInMillis = calculateAlarm(alarm);
-		// if (alarm.enabled) {
-		// clearSnoozeIfNeeded(context, timeInMillis);
-		// }
 		setNextAlert(context);
 		return timeInMillis;
 	}
@@ -119,7 +112,7 @@ public class Alarms {
 	// setNextAlert(context);
 	// }
 	public static void deleteAlarm(Context context, int alarmId) {
-		DBContentProvider.execSQL(context, "delete from " + DatabaseDictionary.ALARM_TABLE_NAME + " where ID=" + alarmId);
+		DBContentProvider.execSQL(context, "delete from " + DatabaseDictionary.ALARM_TABLE + " where ID=" + alarmId);
 		// setNextAlert(context);
 	}
 
@@ -129,13 +122,12 @@ public class Alarms {
 	 * @return cursor over all alarms
 	 */
 	public static Cursor getAlarmsCursor(ContentResolver contentResolver) {
-		return contentResolver.query(DBContentProvider.ALARM_CONTENT_URI, DatabaseDictionary.getTableCols().get(DatabaseDictionary.ALARM_TABLE_NAME),
+		return contentResolver.query(DBContentProvider.ALARM_CONTENT_URI, DatabaseDictionary.getTableCols().get(DatabaseDictionary.ALARM_TABLE),
 				null, null, null);
 	}
 
 	public static Cursor getAlarmsCursor(Context c) {
 		Cursor cu = DBContentProvider.rawQuery(c, "select * from alarm");
-		android.util.Log.i(DatabaseDictionary.TAG, "cursor.count=" + cu.getCount());
 		return DBContentProvider.rawQuery(c, "select * from alarm");
 	}
 
@@ -153,7 +145,7 @@ public class Alarms {
 		// used later to disable expire alarms.
 		long time = 0;
 		time = calculateAlarm(alarm);
-		String[] columns = DatabaseDictionary.getTableCols().get(DatabaseDictionary.ALARM_TABLE_NAME);
+		String[] columns = DatabaseDictionary.getTableCols().get(DatabaseDictionary.ALARM_TABLE);
 		values.put(columns[0], id);
 		values.put(columns[4], alarm.enabled ? 1 : 0);
 		values.put(columns[1], alarm.hour);
@@ -182,7 +174,7 @@ public class Alarms {
 	 */
 	public static Alarm getAlarm(ContentResolver contentResolver, int alarmId) {
 		Cursor cursor = contentResolver.query(ContentUris.withAppendedId(DBContentProvider.ALARM_CONTENT_URI, alarmId), DatabaseDictionary
-				.getTableCols().get(DatabaseDictionary.ALARM_TABLE_NAME), null, null, null);
+				.getTableCols().get(DatabaseDictionary.ALARM_TABLE), null, null, null);
 		Alarm alarm = null;
 		if (cursor != null) {
 			if (cursor.moveToFirst()) {
@@ -248,7 +240,7 @@ public class Alarms {
 		ContentResolver resolver = context.getContentResolver();
 
 		ContentValues values = new ContentValues(2);
-		String[] columns = DatabaseDictionary.getTableCols().get(DatabaseDictionary.ALARM_TABLE_NAME);
+		String[] columns = DatabaseDictionary.getTableCols().get(DatabaseDictionary.ALARM_TABLE);
 		values.put(columns[5], enabled ? 1 : 0);
 
 		// If we are enabling the alarm, calculate alarm time since the time
@@ -272,19 +264,10 @@ public class Alarms {
 		// Cursor cursor =
 		// getFilteredAlarmsCursor(context.getContentResolver());
 		if (cursor != null) {
-			android.util.Log.i(DatabaseDictionary.TAG, "cursor!=null");
 			if (cursor.moveToFirst()) {
 				do {
 					Alarm a = new Alarm(cursor);
-					// A time of 0 indicates this is a repeating alarm, so
-					// calculate the time to get the next alert.
-					// if (a.time == 0) {
 					a.time = calculateAlarm(a);
-					// } else if (a.time < now) {
-					// // Expired alarm, disable it and move along.
-					// enableAlarmInternal(context, a, false);
-					// continue;
-					// }
 					if (a.time < minTime) {
 						minTime = a.time;
 						alarm = a;
@@ -293,8 +276,6 @@ public class Alarms {
 			}
 			cursor.close();
 		}
-		if (alarm == null)
-			android.util.Log.i(DatabaseDictionary.TAG, "cursor==null");
 		return alarm;
 	}
 
@@ -357,7 +338,6 @@ public class Alarms {
 		Calendar c = Calendar.getInstance();
 		c.setTimeInMillis(atTimeInMillis);
 		String timeString = formatDayAndTime(context, c);
-		Log.i(DatabaseDictionary.TAG, "Alarm Set at: " + atTimeInMillis + " hour:" + alarm.hour + " min:" + alarm.minutes);
 		saveNextAlarm(context, timeString);
 	}
 
@@ -443,8 +423,6 @@ public class Alarms {
 		// for a non-repeating alarm. Update this value so the AlarmReceiver
 		// has the right time to compare.
 		alarm.time = time;
-		android.util.Log.i(DatabaseDictionary.TAG, "========snooze:" + alarm.hour);
-
 		enableAlert(context, alarm, time);
 		return true;
 	}

@@ -8,7 +8,9 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.telephony.TelephonyManager;
-import edu.neu.hci.alarm.StartSleepActivity;
+import edu.mit.android.wocketsver1.ActivityMonitor.AccelPoint;
+import edu.mit.android.wocketsver1.ActivityMonitor.SummaryPoint;
+import edu.neu.hci.Global;
 import edu.neu.hci.questionaire.ActivityQuestionActivity;
 import edu.neu.hci.questionaire.AlcoholQuestionActivity;
 import edu.neu.hci.questionaire.CaffeineQuestionActivity;
@@ -27,7 +29,7 @@ public class DBAccessHelper {
 		}
 		TelephonyManager tm = (TelephonyManager) c.getSystemService(Context.TELEPHONY_SERVICE);
 		Cursor cursor = DBContentProvider.rawQuery(c,
-				"select * from " + DatabaseDictionary.QUESTION_SETTING_TABLE_NAME + " where PhoneID='" + tm.getDeviceId() + "';");
+				"select * from " + DatabaseDictionary.QUESTION_SETTING_TABLE + " where PhoneID='" + tm.getDeviceId() + "';");
 		if (cursor.getCount() == 0) {
 			cv.put("PhoneID", tm.getDeviceId());
 			c.getContentResolver().insert(DBContentProvider.QUESTION_SETTING_CONTENT_URI, cv);
@@ -37,7 +39,7 @@ public class DBAccessHelper {
 	}
 
 	public static Boolean[] getQuestionSetting(Context c) {
-		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.QUESTION_SETTING_TABLE_NAME);
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.QUESTION_SETTING_TABLE);
 		if (cursor.getCount() == 0)
 			return null;
 		else {
@@ -72,7 +74,7 @@ public class DBAccessHelper {
 	}
 
 	public static int logUsage(Context c, String activity) {
-		String time = DatabaseDictionary.exactDateFormat.format(new Date());
+		String time = Global.exactDateFormat.format(new Date());
 		ContentValues cv = new ContentValues();
 		cv.put("TimeStamp", time);
 		cv.put("Activity", activity);
@@ -81,8 +83,7 @@ public class DBAccessHelper {
 	}
 
 	public static String[] getLastUsage(Context c) {
-		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.USAGE_LOG_TABLE_NAME
-				+ " order by TimeStamp desc limit 1;");
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.USAGE_LOG_TABLE + " order by TimeStamp desc limit 1;");
 		if (cursor.getCount() == 0)
 			return null;
 		else {
@@ -93,7 +94,7 @@ public class DBAccessHelper {
 	}
 
 	public static String getLastUsage(Context c, String activity) {
-		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.USAGE_LOG_TABLE_NAME + " where Activity='" + activity
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.USAGE_LOG_TABLE + " where Activity='" + activity
 				+ "' order by TimeStamp desc limit 1;");
 		if (cursor.getCount() == 0)
 			return null;
@@ -109,12 +110,12 @@ public class DBAccessHelper {
 		Date date = new Date();
 		if (date.getHours() < 12)
 			date.setTime(date.getTime() - 12 * 3600 * 1000);
-		String createDate = DatabaseDictionary.normalDateFormat.format(date);
-		String lastModDate = DatabaseDictionary.lastModDateFormat.format(new Date());
+		String createDate = Global.normalDateFormat.format(date);
+		String lastModDate = Global.lastModDateFormat.format(new Date());
 		cv.put("PhoneID", tm.getDeviceId());
 		cv.put("QuestionValue", value);
 		cv.put("LastModDate", lastModDate);
-		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.QUESTION_TABLE_NAME + " where CreateDate='" + createDate
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.QUESTION_TABLE + " where CreateDate='" + createDate
 				+ "' and QuestionType='" + type + "';");
 		if (cursor.getCount() == 0) {
 			cv.put("CreateDate", createDate);
@@ -130,8 +131,8 @@ public class DBAccessHelper {
 		Date date = new Date();
 		if (date.getHours() < 12)
 			date.setTime(date.getTime() - 12 * 3600 * 1000);
-		String createDate = DatabaseDictionary.normalDateFormat.format(date);
-		Cursor cursor = DBContentProvider.rawQuery(c, "select QuestionValue from " + DatabaseDictionary.QUESTION_TABLE_NAME + " where CreateDate='"
+		String createDate = Global.normalDateFormat.format(date);
+		Cursor cursor = DBContentProvider.rawQuery(c, "select QuestionValue from " + DatabaseDictionary.QUESTION_TABLE + " where CreateDate='"
 				+ createDate + "' and QuestionType='" + type + "';");
 		if (cursor.getCount() == 0)
 			return -1;
@@ -146,14 +147,14 @@ public class DBAccessHelper {
 		Date date = new Date();
 		if (date.getHours() < 12)
 			date.setTime(date.getTime() - 12 * 3600 * 1000);
-		String createDate = DatabaseDictionary.normalDateFormat.format(date);
-		String lastModDate = DatabaseDictionary.lastModDateFormat.format(new Date());
+		String createDate = Global.normalDateFormat.format(date);
+		String lastModDate = Global.lastModDateFormat.format(new Date());
 		cv.put("GoToBedTime", goToBedTime);
 		cv.put("WakeUpTime", wakeUpTime);
 		cv.put("LastModDate", lastModDate);
 		cv.put("SleepDuration", "");
-		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE_NAME + " where CreateDate='"
-				+ createDate + "';");
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE + " where CreateDate='" + createDate
+				+ "';");
 		if (cursor.getCount() == 0) {
 			cv.put("CreateDate", createDate);
 			c.getContentResolver().insert(DBContentProvider.SLEEP_TIME_CONTENT_URI, cv);
@@ -161,21 +162,46 @@ public class DBAccessHelper {
 			// int r =
 			// c.getContentResolver().update(DBContentProvider.SLEEP_TIME_CONTENT_URI,
 			// cv, "CreateDate=?", new String[] { createDate });
-			DBContentProvider.execSQL(c, "update " + DatabaseDictionary.SLEEP_TIME_TABLE_NAME + " set GotoBedTime='" + goToBedTime + "',WakeUpTime='"
+			DBContentProvider.execSQL(c, "update " + DatabaseDictionary.SLEEP_TIME_TABLE + " set GotoBedTime='" + goToBedTime + "',WakeUpTime='"
 					+ wakeUpTime + "',SleepDuration='',LastModDate='" + lastModDate + "' where CreateDate='" + createDate + "'");
-			android.util.Log.i(DatabaseDictionary.TAG, "+++++++" + wakeUpTime + "+++++++" + createDate + "++");
 		}
 		return 1;
 	}
 
 	public static String getLastSleepTime(Context c) {
-		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE_NAME
-				+ " order by CreateDate desc limit 1;");
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE + " order by CreateDate desc limit 1;");
 		if (cursor.getCount() == 0)
 			return null;
 		else {
 			cursor.moveToFirst();
 			return cursor.getString(2);
 		}
+	}
+
+	public static int insertSummaryPoint(Context c, SummaryPoint point) {
+		ContentValues cv = new ContentValues();
+		if (point == null)
+			return 0;
+		cv.put("WocketRecordedTime", point.mWocketRecordedTime.format("yyyy-MM-dd HH:mm:ss SSS"));
+		cv.put("PhoneReadTime", point.mPhoneReadTime.format("yyyy-MM-dd HH:mm:ss SSS"));
+		cv.put("Written", point.mWritten);
+		cv.put("SeqNum", point.mSeqNum);
+		cv.put("Value", point.mValue);
+		c.getContentResolver().insert(DBContentProvider.SUMMARY_POINT_URI, cv);
+		return 1;
+	}
+	public static int insertAccelPoint(Context c, AccelPoint point) {
+		ContentValues cv = new ContentValues();
+		if (point == null)
+			return 0;
+		cv.put("WocketRecordedTime", point.mWocketRecordedTime.format("yyyy-MM-dd HH:mm:ss SSS"));
+		cv.put("PhoneReadTime", point.mPhoneReadTime.format("yyyy-MM-dd HH:mm:ss SSS"));
+		cv.put("X", point.mX);
+		cv.put("Y", point.mY);
+		cv.put("Z", point.mZ);
+		cv.put("RawData", point.mRawData);
+		cv.put("Compressed", point.mCompressed);
+		c.getContentResolver().insert(DBContentProvider.ACCEL_POINT_URI, cv);
+		return 1;
 	}
 }

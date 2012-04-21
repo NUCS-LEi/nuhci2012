@@ -3,11 +3,16 @@ package edu.neu.hci.alarm;
 import java.text.ParseException;
 import java.util.Date;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.view.View;
@@ -22,6 +27,12 @@ import common.wheel.widget.OnWheelScrollListener;
 import common.wheel.widget.WheelAdapter;
 import common.wheel.widget.WheelView;
 
+import edu.mit.android.wocketsver1.ActivityMonitor.BluetoothSensorService;
+import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
+import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
+import edu.mit.android.wocketsver1.ActivityMonitor.Main;
+import edu.mit.android.wocketsver1.ActivityMonitor.Main.HRUpdateReceiver;
+import edu.neu.hci.Global;
 import edu.neu.hci.R;
 import edu.neu.hci.db.DBAccessHelper;
 import edu.neu.hci.db.DatabaseDictionary;
@@ -30,6 +41,7 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 	private String clockTime;
 	private Button done;
 	private AlarmPreference mAlarmPref;
+	static final int TIMER_PERIOD = 60;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -52,27 +64,28 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 		super.onResume();
 		done.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
-				String wakeUpTime = DatabaseDictionary.normalDateFormat.format(new Date()) + " " + clockTime;
+				String wakeUpTime = Global.normalDateFormat.format(new Date()) + " " + clockTime;
 				Date d;
 				try {
-					d = DatabaseDictionary.lastModDateFormat.parse(wakeUpTime);
+					d = Global.lastModDateFormat.parse(wakeUpTime);
 					if (d.getTime() < System.currentTimeMillis())
 						d.setTime(d.getTime() + 24 * 3600 * 1000);
-					DBAccessHelper.insertOrUpdateSleepTime(getApplicationContext(), DatabaseDictionary.lastModDateFormat.format(new Date()),
-							DatabaseDictionary.lastModDateFormat.format(d));
+					DBAccessHelper.insertOrUpdateSleepTime(getApplicationContext(), Global.lastModDateFormat.format(new Date()),
+							Global.lastModDateFormat.format(d));
 				} catch (ParseException e) {
 					e.printStackTrace();
 				}
 				Toast toast;
 				try {
 					toast = Toast.makeText(getApplicationContext(),
-							DatabaseDictionary.apmDateFormat.format(DatabaseDictionary.normalTimeFormat.parse(clockTime)), Toast.LENGTH_LONG);
+							Global.apmDateFormat.format(Global.normalTimeFormat.parse(clockTime)), Toast.LENGTH_LONG);
 					toast.show();
 				} catch (ParseException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				saveAlarm();
+				startSensor();
 				Intent i = new Intent();
 				// Set navigation, first parameter is source, second is target.
 				i.setClass(StartSleepActivity.this, DuringSleepActivity.class);
@@ -84,7 +97,7 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 
 	private void setClock() {
 		try {
-			Date clock = DatabaseDictionary.lastModDateFormat.parse(DBAccessHelper.getLastSleepTime(getApplicationContext()));
+			Date clock = Global.lastModDateFormat.parse(DBAccessHelper.getLastSleepTime(getApplicationContext()));
 			int hour = clock.getHours();
 			int min = clock.getMinutes();
 			initMinWheel(R.id.set_minute, min);
@@ -267,7 +280,7 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 	public boolean onPreferenceChange(final Preference p, Object newValue) {
 		// Asynchronously save the alarm since this method is called _before_
 		// the value of the preference has changed.
-		android.util.Log.i(DatabaseDictionary.TAG, "==onPref called");
+		android.util.Log.i(Global.TAG, "==onPref called");
 		sHandler.post(new Runnable() {
 			public void run() {
 				saveAlarm();
@@ -282,8 +295,8 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 		alarm.id = 0;
 		alarm.enabled = true;
 		try {
-			alarm.hour = DatabaseDictionary.normalTimeFormat.parse(clockTime).getHours();
-			alarm.minutes = DatabaseDictionary.normalTimeFormat.parse(clockTime).getMinutes();
+			alarm.hour = Global.normalTimeFormat.parse(clockTime).getHours();
+			alarm.minutes = Global.normalTimeFormat.parse(clockTime).getMinutes();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
@@ -292,5 +305,19 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 		alarm.alert = mAlarmPref.getAlert();
 		Alarms.addAlarm(getApplicationContext(), alarm);
 		return 0;
+	}
+
+	private void startSensor() {
+		if (Global.mAlarmSender == null) {
+			Global.mAlarmSender = PendingIntent.getService(this, 0, new Intent(this, BluetoothSensorService.class), 0);
+		}
+		DataStore.setRunning(true);
+
+		// We want the alarm to go off 60 seconds from now.
+		long firstTime = SystemClock.elapsedRealtime();
+
+		// Schedule the alarm!
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		am.setRepeating(AlarmManager.ELAPSED_REALTIME_WAKEUP, firstTime, TIMER_PERIOD * 1000, Global.mAlarmSender);
 	}
 }

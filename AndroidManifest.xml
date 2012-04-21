@@ -14,8 +14,9 @@
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.VIBRATE" />
-    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
     <uses-permission android:name="android.permission.DEVICE_POWER" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:icon="@drawable/sleep"
@@ -28,11 +29,14 @@
             </intent-filter>
         </receiver>
 
-        <service
-            android:name=".alarm.AlarmKlaxon">
+        <service android:name=".alarm.AlarmKlaxon" >
             <intent-filter>
                 <action android:name="edu.neu.hci.ALARM_ALERT" />
             </intent-filter>
+        </service>
+        <service
+            android:name="edu.mit.android.wocketsver1.ActivityMonitor.BluetoothSensorService"
+            android:enabled="true" >
         </service>
 
         <provider
@@ -50,6 +54,10 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="edu.mit.android.wocketsver1.ActivityMonitor.Main"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".GoodSleepActivity"
