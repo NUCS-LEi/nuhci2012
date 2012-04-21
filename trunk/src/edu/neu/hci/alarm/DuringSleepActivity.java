@@ -2,6 +2,7 @@ package edu.neu.hci.alarm;
 
 import java.text.ParseException;
 
+import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
 import edu.neu.hci.R.id;
@@ -34,7 +35,7 @@ public class DuringSleepActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		try {
-			tv.setText(String.format("Alarm time:   %s", DatabaseDictionary.apmDateFormat.format(DatabaseDictionary.lastModDateFormat
+			tv.setText(String.format("Alarm time:   %s", Global.apmDateFormat.format(Global.lastModDateFormat
 					.parse(DBAccessHelper.getLastSleepTime(getApplicationContext())))));
 		} catch (ParseException e) {
 			e.printStackTrace();

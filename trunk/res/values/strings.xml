@@ -8,5 +8,11 @@
     <string name="alarm_alert_snooze_set">"Pause <xliff:g id="MINUTES">%d</xliff:g> minutes"</string>
     <string name="alarm_alert_dismiss_text">"Cancel"</string>
     <string name="alarm_alert_snooze_text">"Cancel"</string>
+    <string name="inactivityNotification">Want to take a walk?</string>
+    <string name="inactivityNotificationDetail">You haven\'t moved in a while</string>
+    <string name="emotionNotification">Did something emotional happen?</string>
+    <string name="emotionNotificationDetail">Your heart rate jumped.</string>
+    <string name="readingNotification">Reading sensor data</string>
+    <string name="version">1.0</string>
 
 </resources>

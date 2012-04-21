@@ -1,5 +1,6 @@
 package edu.neu.hci;
 
+import edu.mit.android.wocketsver1.ActivityMonitor.Main;
 import edu.neu.hci.db.DBAccessHelper;
 import edu.neu.hci.db.DBContentProvider;
 import edu.neu.hci.db.DatabaseDictionary;
@@ -81,6 +82,7 @@ public class GoodSleepActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 		menu.add(0, 0, 0, "Back");
 		menu.add(0, 1, 1, "ExportDB");
+		menu.add(0, 2, 2, "Sensor");
 		return super.onCreateOptionsMenu(menu);
 	}
 
@@ -91,8 +93,12 @@ public class GoodSleepActivity extends Activity {
 			onBackPressed();
 			break;
 		case 1:
-			String s = DBContentProvider.exportLogStatDB();
-			android.util.Log.i(DatabaseDictionary.TAG, "Export=" + s);
+			DBContentProvider.exportLogStatDB();
+			break;
+		case 2:
+			Intent intent = new Intent();
+			intent.setClass(getApplicationContext(), Main.class);
+			startActivity(intent);
 			break;
 		default:
 			break;
