@@ -9,17 +9,17 @@
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="1"
-        android:text="Question Setting" />
+        android:text="Questionnaire Setting" /> 
 
     <TextView
         style="@style/normal_text"
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Choose questions:"
+        android:text="Choose topics relevant to your daily behavior to be set as your daily questionnaire:"
         android:textSize="22dp" />
 
     <LinearLayout
