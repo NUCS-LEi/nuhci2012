@@ -16,8 +16,9 @@
             android:gravity="top"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:text="\nGoodSleep can track your sleep quality during night and the effect of your daily activities on it. \n\nAll you need to do is: 
-        \n\n1) Set your wake up alarm in\n    GoodSleep.\n\n2) Answer few daily questions\n    about your daily activities\n\n3) Wear the wristband sensor\n    before going to bed."
+            android:text="\nGoodSleep helps you track  and improve your sleep quality via a wristband sensor. Things you need to do are:
+            \n\n1) Use GoodSleep as your wake up alarm.\n\n2) Wear the sensor on your dominant wrist before going to bed. 
+            \n\nTo find out the effect of daily behaviors on your sleep, please answer the GoodSleep questionnaire everyday." 
             android:textSize="20dp" />
     </ScrollView>
 
