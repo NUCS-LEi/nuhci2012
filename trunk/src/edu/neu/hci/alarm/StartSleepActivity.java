@@ -40,6 +40,7 @@ import edu.neu.hci.db.DatabaseDictionary;
 public class StartSleepActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 	private String clockTime;
 	private Button done;
+	private Button back;
 	private AlarmPreference mAlarmPref;
 	static final int TIMER_PERIOD = 60;
 
@@ -50,6 +51,7 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 		setContentView(R.layout.start_sleep_layout);
 		addPreferencesFromResource(R.xml.alarm_prefs);
 		done = (Button) findViewById(R.id.startBtn);
+		back = (Button) findViewById(R.id.backBtn);
 		mAlarmPref = (AlarmPreference) findPreference("alarm");
 		Alarm alarm = Alarms.getAlarm(getContentResolver(), 0);
 		if (alarm != null && alarm.alert != null)
@@ -62,6 +64,16 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 
 	public void onResume() {
 		super.onResume();
+		
+		back.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				onBackPressed();
+			}
+		});
+		
+		
 		done.setOnClickListener(new OnClickListener() {
 			public void onClick(View v) {
 				String wakeUpTime = Global.normalDateFormat.format(new Date()) + " " + clockTime;
@@ -94,6 +106,7 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 		});
 		updateStatus();
 	}
+
 
 	private void setClock() {
 		try {
