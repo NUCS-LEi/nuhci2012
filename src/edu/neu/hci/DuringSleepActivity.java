@@ -19,18 +19,28 @@ import android.widget.Button;
 
 public class DuringSleepActivity extends Activity {
 	private Button stopTrackingBtn;
+	private Button backBtn;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.good_night_with_sensor);
 		stopTrackingBtn = (Button) findViewById(R.id.stopTrackingBtn);
+		backBtn = (Button) findViewById(R.id.backBtn);
 
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		backBtn.setOnClickListener(new OnClickListener() {
+
+			@Override
+			public void onClick(View v) {
+				stopSensor();
+				onBackPressed();
+			}
+		});
 		stopTrackingBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
