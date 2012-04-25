@@ -6,8 +6,11 @@ import java.util.Date;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
+import android.content.SharedPreferences.Editor;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
@@ -321,6 +324,13 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 	}
 
 	private void startSensor() {
+		SharedPreferences pref = getSharedPreferences(Defines.SHARED_PREF_NAME, Context.MODE_PRIVATE);
+		if(pref.getInt(Defines.SHARED_PREF_NUM_SENSORS,0)==0){
+			Editor edit = getSharedPreferences(Defines.SHARED_PREF_NAME, Context.MODE_PRIVATE).edit();
+			edit.putInt(Defines.SHARED_PREF_NUM_SENSORS, 1);
+			edit.putString(Defines.SHARED_PREF_SENSOR + "0", Global.DEFAULT_WOCKET_NAME);
+			edit.commit();
+		}
 		if (Global.mAlarmSender == null) {
 			Global.mAlarmSender = PendingIntent.getService(this, 0, new Intent(this, BluetoothSensorService.class), 0);
 		}

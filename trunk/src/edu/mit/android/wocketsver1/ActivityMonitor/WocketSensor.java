@@ -20,6 +20,7 @@ import java.util.List;
 
 import edu.mit.android.wocketsver1.mhealth.sensordata.SensorData;
 import edu.mit.android.wocketsver1.mhealth.sensordata.WocketSensorData;
+import edu.neu.hci.Global;
 import edu.neu.hci.db.DBAccessHelper;
 
 import android.content.Context;
@@ -77,8 +78,9 @@ public class WocketSensor extends Sensor {
 	 * @param address
 	 *            - the Bluetooth MAC address of the Wocket
 	 */
-	public WocketSensor(String name, String address) {
+	public WocketSensor(Context c, String name, String address) {
 		super(TYPE.WOCKET, name, address);
+		Log.i(Global.TAG, "***Wocket Sensor construction");
 		mBytesReceived = 0;
 		mInit = false;
 		prevX = 0;
@@ -92,7 +94,7 @@ public class WocketSensor extends Sensor {
 			someWocketSensorData[i] = new WocketSensorData(SensorData.TYPE.WOCKET12BITRAW, aDate, 0, 0, 0);
 		someWocketSensorDataIndex = 0;
 
-		loadNVData();
+		loadNVData(c);
 	}
 
 	private void addWocketSensorDataPoint(Date aTime, int x, int y, int z) {
@@ -109,8 +111,8 @@ public class WocketSensor extends Sensor {
 	 * the points are read from the Wocket device again, we can safely throw
 	 * them out knowing they were already read in.
 	 */
-	private void loadNVData() {
-
+	private void loadNVData(Context c) {
+		Log.i(Global.TAG, "****Enter loadNVData");
 		Time now = new Time();
 		now.setToNow();
 		String dirName = "data/summary/" + now.format("%Y-%m-%d") + "/" + now.format("%H") + "/";
@@ -136,7 +138,7 @@ public class WocketSensor extends Sensor {
 
 								SummaryPoint point = new SummaryPoint(seqNum, value);
 								point.mWritten = true;
-								addSummaryPoint(point);
+								addSummaryPoint(c, point);
 							} catch (Exception e) {
 								e.printStackTrace();
 							}
@@ -180,14 +182,14 @@ public class WocketSensor extends Sensor {
 	 * @param point
 	 *            - the SummaryPoint to add
 	 */
-	public void addSummaryPoint(SummaryPoint point) {
+	public void addSummaryPoint(Context c, SummaryPoint point) {
 		// If we already have this point, just dump it
 		if (containsSummaryPoint(point)) {
 			return;
 		}
-
+		Log.i(Global.TAG, "*******Enter addSummaryPoint");
 		mSummaryPoints.add(point);
-//		DBAccessHelper.insertSummaryPoint(c, point);
+		DBAccessHelper.insertSummaryPoint(c, point);
 
 		if (point.mValue > Defines.WOCKET_STILLNESS_MIN && !point.mWritten) {
 			DataStore.incrementActivityScore();
@@ -261,9 +263,10 @@ public class WocketSensor extends Sensor {
 	 * @param point
 	 *            - the new raw point to add.
 	 */
-	public void addAccelPoint(AccelPoint point) {
+	public void addAccelPoint(Context c, AccelPoint point) {
+		Log.i(Global.TAG, "*******Enter addAccelPoint");
 		mAccelPoints.add(point);
-//		DBAccessHelper.insertAccelPoint(c, point);
+		DBAccessHelper.insertAccelPoint(c, point);
 		if (mAccelPoints.size() > Defines.MAX_WOCKET_POINTS) {
 			if (DataStore.getContext() != null) {
 				Time now = new Time();
@@ -364,7 +367,7 @@ public class WocketSensor extends Sensor {
 	 */
 	public void parsePacket(Context c, byte[] data, int size) {
 		mBytesReceived += size;
-
+		Log.i(Global.TAG, "parsePacket");
 		for (int x = 0; x < size; x++) {
 			int Hbit = ((data[x] & 0x80) >> 7);
 			if (Hbit == 1) {
@@ -385,7 +388,7 @@ public class WocketSensor extends Sensor {
 						// + yVal + " " + zVal);
 
 						byte[] raw = { data[x], data[x + 1], data[x + 2] };
-						addAccelPoint(new AccelPoint(xVal, yVal, zVal, true, raw));
+						addAccelPoint(c, new AccelPoint(xVal, yVal, zVal, true, raw));
 
 						prevX = xVal;
 						prevY = yVal;
@@ -396,7 +399,7 @@ public class WocketSensor extends Sensor {
 				case WOCKET_RESPONSE: {
 					// Got a response
 					int opCode = (data[x] & 0x1f);
-					Log.i("ActivityMonitor", "opcode: " + opCode);
+					Log.i(Global.TAG, "opcode: " + opCode);
 					switch (opCode) {
 					case WOCKET_RESPONSE_BATTERY_LEVEL:
 						int batteryLevel = 0;
@@ -413,7 +416,7 @@ public class WocketSensor extends Sensor {
 					case WOCKET_RESPONSE_BATTERY_PERCENT:
 						int battery = 0;
 						battery = (data[x + 1] & 0x7f);
-						Log.i("ActivityMonitor", "battery: " + battery);
+						Log.i(Global.TAG, "battery: " + battery);
 						if (battery > 0 && battery <= 100) {
 							mBattery = battery;
 						}
@@ -421,16 +424,16 @@ public class WocketSensor extends Sensor {
 
 					case WOCKET_RESPONSE_SLEEP_MODE:
 						int sleep = ((data[x + 1] & 0x7f) << 9) | ((data[x + 2] & 0x7f) << 2) | ((data[x + 3] & 0x60) >> 5);
-						Log.i("ActivityMonitor", "sleep : " + sleep);
+						Log.i(Global.TAG, "sleep : " + sleep);
 						break;
 					case WOCKET_RESPONSE_SUMMARY_COUNT:
 						// read 6 bytes
 						int seqNum = ((data[x + 1] & 0x7f) << 9) | ((data[x + 2] & 0x7f) << 2) | ((data[x + 3] >> 5) & 0x03);
 						int count = ((data[x + 3] & 0x1f) << 11) | ((data[x + 4] & 0x7f) << 4) | ((data[x + 5] >> 2) & 0x0f);
 
-						Log.i("ActivityMonitor", "Got activity count: " + seqNum + " " + count);
+						Log.i(Global.TAG, "Got activity count: " + seqNum + " " + count);
 
-						addSummaryPoint(new SummaryPoint(seqNum, count));
+						addSummaryPoint(c, new SummaryPoint(seqNum, count));
 						// if (seqNum > lastRecivedSN){
 						lastRecivedSN = seqNum;
 						// }
@@ -438,7 +441,7 @@ public class WocketSensor extends Sensor {
 						break;
 					case WOCKET_RESPONSE_ACC_RSP:
 						int cseqNum = (data[x + 1] & 0xff | data[x + 2] & 0xff);
-						Log.i("ActivityMonitor", "Got sseq:" + cseqNum);
+						Log.i(Global.TAG, "Got sseq:" + cseqNum);
 					default:
 						break;
 					}
@@ -457,7 +460,7 @@ public class WocketSensor extends Sensor {
 
 						byte[] raw = { data[x], data[x + 1], data[x + 2], data[x + 3], data[x + 4] };
 
-						addAccelPoint(new AccelPoint(xVal, yVal, zVal, false, raw));
+						addAccelPoint(c, new AccelPoint(xVal, yVal, zVal, false, raw));
 
 						prevX = xVal;
 						prevY = yVal;
@@ -473,6 +476,6 @@ public class WocketSensor extends Sensor {
 	@Override
 	public void parsePacket(byte[] data, int size) {
 		// TODO Auto-generated method stub
-		
+
 	}
 }

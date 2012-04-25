@@ -19,11 +19,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
 import org.achartengine.chart.LineChart;
 import org.achartengine.chart.PointStyle;
-import org.achartengine.chart.ScatterChart;
 import org.achartengine.model.XYMultipleSeriesDataset;
-import org.achartengine.model.XYValueSeries;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
 
@@ -31,7 +30,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
-import android.util.Log;
 
 /**
  * Average temperature demo chart.
@@ -117,6 +115,64 @@ public class DrawGraph extends AbstractDemoChart {
 		XYMultipleSeriesDataset dataset = buildDataset(titles, x, values);
 		intent = ChartFactory.getCombinedXYChartIntent(context, dataset, renderer, types, "Sleep Reported");
 		return intent;
+
+	}
+
+	public GraphicalView getGraphView(Context context, GraphData data) {
+		GraphicalView gv = null;
+		// value data
+		List<double[]> dataList = data.getDataList();
+		double[] time = dataList.get(0);
+		double[] value = dataList.get(1);
+		double finishDate = time[time.length - 1];
+		double upperBound0 = value[0];
+		double lowerBound0 = value[0];
+		for (int i = 0; i < value.length; i++) {
+			upperBound0 = upperBound0 < value[i] ? value[i] : upperBound0;
+			lowerBound0 = lowerBound0 > value[i] ? value[i] : lowerBound0;
+		}
+
+		List<double[]> x = new ArrayList<double[]>();
+		x.add(time);
+		List<double[]> values = new ArrayList<double[]>();
+		values.add(value);
+		List<String> typeList = new ArrayList<String>();
+		typeList.add(LineChart.TYPE);
+		List<String> titleList = new ArrayList<String>();
+		titleList.add("Sleep Phrase");
+		List<Integer> colorList = new ArrayList<Integer>();
+		colorList.add(Color.YELLOW);
+		List<PointStyle> styleList = new ArrayList<PointStyle>();
+		styleList.add(PointStyle.POINT);
+		XYMultipleSeriesRenderer renderer = new XYMultipleSeriesRenderer(2);
+
+		String[] types = new String[typeList.size()];
+		String[] titles = new String[titleList.size()];
+		int[] colors = new int[colorList.size()];
+		PointStyle[] styles = new PointStyle[styleList.size()];
+		for (int i = 0; i < typeList.size(); i++) {
+			titles[i] = titleList.get(i);
+			types[i] = typeList.get(i);
+			colors[i] = colorList.get(i);
+			styles[i] = styleList.get(i);
+		}
+		setRenderer(renderer, colors, styles);
+		int length = renderer.getSeriesRendererCount();
+		for (int i = 0; i < length; i++) {
+			((XYSeriesRenderer) renderer.getSeriesRendererAt(i)).setFillPoints(true);
+		}
+		setChartSettings(renderer, "Sleep Reported", "Sleep Time", "Phrase", 0, finishDate + 10, lowerBound0 - 10, upperBound0 + 10, Color.LTGRAY,
+				Color.LTGRAY);
+		renderer.setXLabels(12);
+		renderer.setYLabels(10);
+		renderer.setShowGrid(true);
+		renderer.setXLabelsAlign(Align.CENTER);
+		renderer.setYLabelsAlign(Align.CENTER);
+		renderer.setZoomButtonsVisible(true);
+		renderer.setXAxisMin(0, 0);
+		XYMultipleSeriesDataset dataset = buildDataset(titles, x, values);
+		gv = ChartFactory.getCombinedXYChartView(context, dataset, renderer, types);
+		return gv;
 
 	}
 

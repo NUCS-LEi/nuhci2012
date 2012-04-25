@@ -363,7 +363,7 @@ public class Main extends Activity {
 				Iterator<BluetoothDevice> itr = devices.iterator();
 				while (itr.hasNext()) {
 					BluetoothDevice dev = itr.next();
-					DataStore.checkAndAddSensor(dev.getName(), dev.getAddress());
+					DataStore.checkAndAddSensor(getApplicationContext(), dev.getName(), dev.getAddress());
 
 				}
 			}

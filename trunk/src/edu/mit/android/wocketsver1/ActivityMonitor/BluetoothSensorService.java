@@ -38,9 +38,12 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.Vibrator;
 import android.text.format.Time;
+import android.util.Log;
 import edu.mit.android.wocketsver1.ActivityMonitor.Sensor.TYPE;
 import edu.mit.android.wocketsver1.mhealth.sensordata.DataSaver;
+import edu.neu.hci.Global;
 import edu.neu.hci.R;
+import edu.neu.hci.db.DBAccessHelper;
 
 public class BluetoothSensorService extends Service {
 	static final String TAG = "BluetoothSensorService";
@@ -84,14 +87,12 @@ public class BluetoothSensorService extends Service {
 				vb.vibrate(vibrateToneZephyr, -1);
 			else if (type == ALIVE)
 				vb.vibrate(vibrateToneAlive, -1);
-		} else
-			android.util.Log.i(TAG, "Couldn't get vibration object.");
+		} 
 	}
 
 	@Override
 	// Called when the service is created and needs to be run
 	public void onCreate() {
-
 		// Acquire a wake lock so that the CPU will stay awake while we are
 		// reading
 		// from the sensors
@@ -107,7 +108,7 @@ public class BluetoothSensorService extends Service {
 		mNM = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 
 		// show the icon in the status bar
-//		 showReadingNotification();
+		// showReadingNotification();
 
 		// The data store might not be initialized if the app was closed
 		// due to a low memory condition, or some other reason beyond our
@@ -181,7 +182,6 @@ public class BluetoothSensorService extends Service {
 
 			// Debugging only
 			// startVibrationAlert(ALIVE);
-
 			DataStore.setThreadLastRunTime(System.currentTimeMillis());
 			writeLogInfoTest("");
 
@@ -209,7 +209,6 @@ public class BluetoothSensorService extends Service {
 						}
 					}
 				}
-
 				if (btProblem == true && numSensors > 0) {
 					mBluetoothAdapter.disable();
 
@@ -332,21 +331,10 @@ public class BluetoothSensorService extends Service {
 
 							} else if (currentSensor.mType == Sensor.TYPE.WOCKET) {
 								// startVibrationAlert(WOCKET);
-
 								WocketSensor wocket = (WocketSensor) currentSensor;
 
 								if (!wocket.mInit) {
 									out.write(WocketSensor.WOCKET_60_SEC_BURST_PACKET);
-									// TODO currently this flag is never set and
-									// we write the
-									// mode every time the Wocket connects.
-									// There was some trouble
-									// switching from continuous to burst mode
-									// before and this had
-									// to be sent often. This may no longer be
-									// the case and we
-									// will only need to send once
-
 								}
 
 								byte[] seqNum = new byte[4];
@@ -378,7 +366,6 @@ public class BluetoothSensorService extends Service {
 								byte[] data = new byte[Defines.MAX_WOCKET_PACKET_SIZE];
 								data[0] = (byte) 0;
 								int count = 0;
-
 								try {
 
 									int delay = 0;
@@ -429,7 +416,6 @@ public class BluetoothSensorService extends Service {
 										out.write(seqNum[1]);
 										out.write(seqNum[2]);
 										out.write(seqNum[3]);
-										android.util.Log.i("ActivityMonitor", "LastSeqNum :" + String.valueOf(lastSeqNum));
 										byte[] WOCKET_SET_LED_PACKET = { (byte) 0xBC, (byte) 0x03 };
 										out.write(WOCKET_SET_LED_PACKET);
 										out.write(WOCKET_SET_LED_PACKET);
@@ -442,10 +428,10 @@ public class BluetoothSensorService extends Service {
 										mBinder.wait(25);
 									}
 								}
-
-								currentSensor.parsePacket(data, count);
+								((WocketSensor) currentSensor).parsePacket(BluetoothSensorService.this, data, count);
 
 								lastSeqNum = ((WocketSensor) currentSensor).getLastSeqNum();
+								android.util.Log.i(Global.TAG, "LastSeqNum :" + String.valueOf(lastSeqNum));
 
 								Editor edit = getSharedPreferences("WocketsACPref", MODE_PRIVATE).edit();
 								edit.putInt("lastSeqNum", lastSeqNum);

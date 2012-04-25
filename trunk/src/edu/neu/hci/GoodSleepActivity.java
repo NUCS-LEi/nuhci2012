@@ -1,9 +1,15 @@
 package edu.neu.hci;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Random;
+import java.util.Set;
 
+import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
+import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
 import edu.mit.android.wocketsver1.ActivityMonitor.Main;
+import edu.mit.android.wocketsver1.ActivityMonitor.Sensor;
 import edu.neu.hci.db.DBAccessHelper;
 import edu.neu.hci.db.DBContentProvider;
 import edu.neu.hci.db.DatabaseDictionary;
@@ -13,15 +19,22 @@ import edu.neu.hci.questionaire.SettingQuestionActivity;
 import edu.neu.hci.summary.SleepScoreActivity;
 import edu.neu.hci.summary.SleepSummaryMain;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
 import android.content.ContentValues;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences.Editor;
 import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -34,6 +47,9 @@ public class GoodSleepActivity extends Activity {
 	private Button howIsMySleepBtn;
 	private TextView title;
 	private ImageView img;
+	static ArrayAdapter<CharSequence> adapter = null;
+	static Sensor currentSensor = null;
+	static ArrayList<CharSequence> list = null;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,7 +61,8 @@ public class GoodSleepActivity extends Activity {
 		howIsMySleepBtn = (Button) findViewById(R.id.howIsMySleepBtn);
 		title = (TextView) findViewById(R.id.title);
 		img = (ImageView) findViewById(R.id.imageView1);
-
+		list = new ArrayList<CharSequence>();
+		adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, list);
 	}
 
 	@Override
@@ -86,39 +103,27 @@ public class GoodSleepActivity extends Activity {
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
-		menu.add(0, 0, 0, "Back");
 		menu.add(0, 1, 1, "ExportDB");
-		menu.add(0, 2, 2, "Sensor");
+		menu.add(0, 2, 2, "Sensors");
 		menu.add(1, 3, 3, "Create Fake Data");
 		menu.add(1, 4, 4, "Clear Fake Data");
-		menu.add(1, 5, 5, "Graph");
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
-		case 0:
-			onBackPressed();
-			break;
 		case 1:
 			DBContentProvider.exportLogStatDB();
 			break;
 		case 2:
-			Intent intent = new Intent();
-			intent.setClass(getApplicationContext(), Main.class);
-			startActivity(intent);
+			showDialog(0);
 			break;
 		case 3:
 			createFakeData(getApplicationContext());
 			break;
 		case 4:
 			clearFakeData(getApplicationContext());
-			break;
-		case 5:
-			Intent i = new Intent();
-			i.setClass(getApplicationContext(), Graph.class);
-			startActivity(i);
 			break;
 		default:
 			break;
@@ -158,5 +163,107 @@ public class GoodSleepActivity extends Activity {
 
 	private void clearFakeData(Context c) {
 		DBContentProvider.execSQL(c, "delete from summary_point");
+	}
+
+	public Dialog onCreateDialog(int dialog) {
+		Dialog retVal = null;
+		switch (dialog) {
+
+		// Shows a list of all the available supported sensor devices and allows
+		// the user to enable or disable them
+		case 0: {
+			if (BluetoothAdapter.getDefaultAdapter() != null) {
+				Set<BluetoothDevice> devices = BluetoothAdapter.getDefaultAdapter().getBondedDevices();
+				Iterator<BluetoothDevice> itr = devices.iterator();
+				while (itr.hasNext()) {
+					BluetoothDevice dev = itr.next();
+					DataStore.checkAndAddSensor(getApplicationContext(), dev.getName(), dev.getAddress());
+
+				}
+			}
+			AlertDialog.Builder builder = new AlertDialog.Builder(this);
+			builder.setTitle("Select Sensors:");
+			ArrayList<CharSequence> nameArray = DataStore.getSensorNames(false);
+			CharSequence[] names = new CharSequence[nameArray.size()];
+			for (int x = 0; x < nameArray.size(); x++) {
+				names[x] = nameArray.get(x);
+			}
+			builder.setCancelable(false);
+			builder.setNegativeButton("Add new sensor", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					removeDialog(0);
+					Intent intentBluetooth = new Intent();
+					intentBluetooth.setAction(android.provider.Settings.ACTION_BLUETOOTH_SETTINGS);
+					startActivity(intentBluetooth);
+				}
+			});
+			builder.setNeutralButton("Done", new DialogInterface.OnClickListener() {
+
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					removeDialog(0);
+					Editor edit = getSharedPreferences(Defines.SHARED_PREF_NAME, Context.MODE_PRIVATE).edit();
+					edit.clear();
+					edit.putInt(Defines.SHARED_PREF_EMOTION_THRESHOLD, DataStore.mEmotionalEventThreshold);
+					edit.putInt(Defines.SHARED_PREF_INACTIVITY_TIME, DataStore.mStillnessDuration);
+					edit.putBoolean(Defines.SHARED_PREF_FIRST_RUN, true);
+					edit.putInt(Defines.SHARED_PREF_ACTIVITY_SCORE, DataStore.getActivityScore());
+					edit.putBoolean(Defines.SHARED_PREF_RUNNNING, DataStore.getRunning());
+					if (DataStore.getStartRecordingTime() != null) {
+						edit.putString(Defines.SHARED_PREF_START_TIME, DataStore.getStartRecordingTime().format2445());
+					}
+					for (int x = 0; x < Defines.NUM_DAYS_SCORE_TO_SAVE; x++) {
+						edit.putInt(Defines.SHARED_PREF_PREV_SCORE + x, DataStore.mPreviousActivityScores[x]);
+					}
+					if (DataStore.mActivityScoreDate != null) {
+						edit.putString(Defines.SHARED_PREF_SCORE_DATE, DataStore.mActivityScoreDate.format2445());
+					}
+					ArrayList<CharSequence> enabledNames = DataStore.getSensorNames(true);
+					int enabledSize = enabledNames.size();
+					edit.putInt(Defines.SHARED_PREF_NUM_SENSORS, enabledSize);
+
+					for (int x = 0; x < enabledSize; x++) {
+						edit.putString(Defines.SHARED_PREF_SENSOR + x, enabledNames.get(x).toString());
+					}
+
+					edit.commit();
+				}
+			});
+
+			builder.setMultiChoiceItems(names, DataStore.getSensorStates(), new DialogInterface.OnMultiChoiceClickListener() {
+				public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+
+					DataStore.mSensors.get(which).mEnabled = isChecked;
+
+					if (isChecked) {
+						adapter.add(DataStore.mSensors.get(which).mName);
+					} else {
+						adapter.remove(DataStore.mSensors.get(which).mName);
+						if (currentSensor == DataStore.mSensors.get(which)) {
+							currentSensor = null;
+						}
+					}
+
+					if (adapter.isEmpty()) {
+						adapter.add("Enable a sensor");
+						currentSensor = null;
+					} else {
+						adapter.remove("Enable a sensor");
+					}
+
+					if (currentSensor == null) {
+						currentSensor = DataStore.getFirstSensor();
+					}
+				}
+			});
+			retVal = builder.create();
+		}
+			break;
+		default:
+			break;
+
+		}
+		return retVal;
 	}
 }

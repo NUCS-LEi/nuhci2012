@@ -70,6 +70,7 @@ public final class R {
         public static final int coffeineCheckBox=0x7f080063;
         public static final int connection=0x7f08001a;
         public static final int connectionLabel=0x7f080019;
+        public static final int containerBody=0x7f08008c;
         public static final int current=0x7f08000b;
         public static final int currentLabel=0x7f08000a;
         public static final int day_1=0x7f080034;
@@ -109,15 +110,15 @@ public final class R {
         public static final int min=0x7f080008;
         public static final int minLabel=0x7f080007;
         public static final int pBar=0x7f08005c;
-        public static final int physicalActivityDoneBtn=0x7f08008c;
+        public static final int physicalActivityDoneBtn=0x7f08008d;
         public static final int questionSetBtn=0x7f080069;
         public static final int relativeLayout1=0x7f080000;
         public static final int set_am_pm=0x7f080077;
         public static final int set_hour=0x7f080075;
         public static final int set_minute=0x7f080076;
         public static final int simple_spinner_item=0x7f080036;
-        public static final int sleepDurationDoneBtn=0x7f08008d;
-        public static final int sleepScoreDoneBtn=0x7f08008e;
+        public static final int sleepDurationDoneBtn=0x7f08008e;
+        public static final int sleepScoreDoneBtn=0x7f08008f;
         public static final int smokeBackBtn=0x7f080073;
         public static final int smokeBtn1=0x7f08006d;
         public static final int smokeBtn2=0x7f08006e;
@@ -128,7 +129,7 @@ public final class R {
         public static final int smokeCheckBox=0x7f080065;
         public static final int smokeNextBtn=0x7f080074;
         public static final int smokeTitle=0x7f08006c;
-        public static final int smokingDoneBtn=0x7f08008f;
+        public static final int smokingDoneBtn=0x7f080090;
         public static final int spacer=0x7f08001b;
         public static final int spacer2=0x7f08001e;
         public static final int spinner1=0x7f080003;
@@ -149,7 +150,7 @@ public final class R {
         public static final int stressBtn3=0x7f08007c;
         public static final int stressBtn4=0x7f08007d;
         public static final int stressCheckBox=0x7f080068;
-        public static final int stressDoneBtn=0x7f080090;
+        public static final int stressDoneBtn=0x7f080091;
         public static final int stressNextBtn=0x7f08007f;
         public static final int stressTitle=0x7f080079;
         public static final int tAverage=0x7f080014;
@@ -175,7 +176,7 @@ public final class R {
         public static final int title=0x7f08005e;
         public static final int trailingLabel=0x7f080013;
         public static final int userStatTitle=0x7f080082;
-        public static final int wakeUpTimeDoneBtn=0x7f080091;
+        public static final int wakeUpTimeDoneBtn=0x7f080092;
     }
     public static final class layout {
         public static final int activity_monitor_main=0x7f030000;
