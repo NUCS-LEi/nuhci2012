@@ -3,6 +3,7 @@ package edu.neu.hci.alarm;
 import java.util.Date;
 
 import android.app.Activity;
+import android.app.AlarmManager;
 import android.content.Intent;
 import android.media.RingtoneManager;
 import android.os.Bundle;
@@ -10,10 +11,13 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.Toast;
+import edu.mit.android.wocketsver1.ActivityMonitor.BluetoothSensorService;
+import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
+import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
 import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
-import edu.neu.hci.db.DatabaseDictionary;
+import edu.neu.hci.db.DBAccessHelper;
 
 public class WakeUpActivity extends Activity {
 	private Button stop;
@@ -45,6 +49,10 @@ public class WakeUpActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				deleteSnooze();
+				stopSensor();
+				Date date = new Date();
+				String goToBedTime=DBAccessHelper.getLastSleepTime(getApplicationContext());
+				DBAccessHelper.insertOrUpdateSleepTime(getApplicationContext(), goToBedTime, Global.lastModDateFormat.format(date));
 				stopService(new Intent(Alarms.ALARM_ALERT_ACTION));
 				Intent i = new Intent();
 				i.setClass(WakeUpActivity.this, GoodSleepActivity.class);
@@ -68,12 +76,27 @@ public class WakeUpActivity extends Activity {
 			alarm.alert = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_ALARM);
 		Alarms.addAlarm(getApplicationContext(), alarm);
 		Toast toast;
-		toast = Toast.makeText(getApplicationContext(), String.format("Snooze for %d minutes", Global.SNOOZE_TIME / 60000),
-				Toast.LENGTH_LONG);
+		toast = Toast.makeText(getApplicationContext(), String.format("Snooze for %d minutes", Global.SNOOZE_TIME / 60000), Toast.LENGTH_LONG);
 		toast.show();
 	}
 
 	private void deleteSnooze() {
 		Alarms.deleteAlarm(getApplicationContext(), 1);
+	}
+
+	private void stopSensor() {
+		AlarmManager am = (AlarmManager) getSystemService(ALARM_SERVICE);
+		am.cancel(Global.mAlarmSender);
+		Global.mAlarmSender = null;
+
+		DataStore.setRunning(false);
+
+		stopService(new Intent(this, BluetoothSensorService.class));
+
+		// Set all connection states to none
+		int size = DataStore.mSensors.size();
+		for (int x = 0; x < size; x++) {
+			DataStore.mSensors.get(x).mConnectionErrors = Defines.NO_CONNECTION_LIMIT;
+		}
 	}
 }

@@ -44,6 +44,6 @@ public class Introduction extends Activity {
 
 	private void initialDB() {
 		Boolean[] initialSet = { true, true, true, true, true, true };
-		int re = DBAccessHelper.insertOrUpdateQuestionSetting(getApplicationContext(), initialSet);
+		DBAccessHelper.insertOrUpdateQuestionSetting(getApplicationContext(), initialSet);
 	}
 }

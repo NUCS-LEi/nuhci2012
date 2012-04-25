@@ -6,18 +6,6 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
 
-import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
-import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
-import edu.mit.android.wocketsver1.ActivityMonitor.Main;
-import edu.mit.android.wocketsver1.ActivityMonitor.Sensor;
-import edu.neu.hci.db.DBAccessHelper;
-import edu.neu.hci.db.DBContentProvider;
-import edu.neu.hci.db.DatabaseDictionary;
-import edu.neu.hci.graph.Graph;
-import edu.neu.hci.questionaire.CaffeineQuestionActivity;
-import edu.neu.hci.questionaire.SettingQuestionActivity;
-import edu.neu.hci.summary.SleepScoreActivity;
-import edu.neu.hci.summary.SleepSummaryMain;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -28,7 +16,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences.Editor;
-import android.opengl.Visibility;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,6 +25,13 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
+import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
+import edu.mit.android.wocketsver1.ActivityMonitor.Sensor;
+import edu.neu.hci.db.DBAccessHelper;
+import edu.neu.hci.db.DBContentProvider;
+import edu.neu.hci.questionaire.SettingQuestionActivity;
+import edu.neu.hci.summary.SleepSummaryMain;
 
 // Every display page needs to extends Activity, also register in AndroidManifest.xml, 
 // you can copy it like other activities and change name.
@@ -68,6 +62,8 @@ public class GoodSleepActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		if (DBAccessHelper.getStatic(getApplicationContext()) == 0)
+			howIsMySleepBtn.setVisibility(View.INVISIBLE);
 		title.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {

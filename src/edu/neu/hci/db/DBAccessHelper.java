@@ -1,5 +1,6 @@
 package edu.neu.hci.db;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -152,7 +153,14 @@ public class DBAccessHelper {
 		cv.put("GoToBedTime", goToBedTime);
 		cv.put("WakeUpTime", wakeUpTime);
 		cv.put("LastModDate", lastModDate);
-		cv.put("SleepDuration", "");
+		String duration = "";
+		try {
+			duration = String.valueOf((Global.lastModDateFormat.parse(wakeUpTime).getTime() - Global.lastModDateFormat.parse(goToBedTime).getTime())
+					/ (60 * 1000));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		cv.put("SleepDuration", duration);
 		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE + " where CreateDate='" + createDate
 				+ "';");
 		if (cursor.getCount() == 0) {
@@ -182,7 +190,7 @@ public class DBAccessHelper {
 		ContentValues cv = new ContentValues();
 		if (point == null)
 			return 0;
-		Date date=new Date();
+		Date date = new Date();
 		date.setTime(point.mWocketRecordedTime.toMillis(true));
 		cv.put("WocketRecordedTime", Global.exactDateFormat.format(date));
 		date.setTime(point.mPhoneReadTime.toMillis(true));
@@ -198,7 +206,7 @@ public class DBAccessHelper {
 		ContentValues cv = new ContentValues();
 		if (point == null)
 			return 0;
-		Date date=new Date();
+		Date date = new Date();
 		date.setTime(point.mWocketRecordedTime.toMillis(true));
 		cv.put("WocketRecordedTime", Global.exactDateFormat.format(date));
 		date.setTime(point.mPhoneReadTime.toMillis(true));
@@ -268,5 +276,117 @@ public class DBAccessHelper {
 			al.add(value);
 			return al;
 		}
+	}
+
+	public static int getLastNightStatic(Context c, String modularName) {
+		Date date = new Date();
+		date.setTime(date.getTime() - 24 * 60 * 60 * 1000);
+		if (modularName.equals(Global.GO_TO_BED_TIME)) {
+			String rawQuery = String.format("select GoToBedTime from sleep_time where CreateDate='%s';", Global.normalDateFormat.format(date));
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			Date d = null;
+			try {
+				d = Global.lastModDateFormat.parse(cur.getString(0));
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return -1;
+			}
+			return d.getHours() * 60 + d.getMinutes();
+		} else if (modularName.equals(Global.WAKE_UP_TIME)) {
+			String rawQuery = String.format("select WakeUpTime from sleep_time where CreateDate='%s';", Global.normalDateFormat.format(date));
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			Date d = null;
+			try {
+				d = Global.lastModDateFormat.parse(cur.getString(0));
+			} catch (ParseException e) {
+				e.printStackTrace();
+				return -1;
+			}
+			return d.getHours() * 60 + d.getMinutes();
+		} else if (modularName.equals(Global.SLEEP_DURATION)) {
+			String rawQuery = String.format("select SleepDuration from sleep_time where CreateDate='%s';", Global.normalDateFormat.format(date));
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			return cur.getInt(0);
+		} else {
+			String rawQuery = String.format("select QuestionValue from question where CreateDate='%s' and QuestionType='%s';",
+					Global.normalDateFormat.format(date), modularName);
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			return cur.getInt(0);
+		}
+	}
+
+	public static float getAverageStatic(Context c, String modularName) {
+		if (modularName.equals(Global.GO_TO_BED_TIME)) {
+			String rawQuery = String.format("select GoToBedTime from sleep_time;");
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			Date d = null;
+			int total = 0;
+			while (!cur.isAfterLast()) {
+				try {
+					d = Global.lastModDateFormat.parse(cur.getString(0));
+					total += d.getHours() * 60 + d.getMinutes();
+				} catch (ParseException e) {
+					e.printStackTrace();
+					continue;
+				}
+			}
+			return total / cur.getCount();
+		} else if (modularName.equals(Global.WAKE_UP_TIME)) {
+			String rawQuery = String.format("select WakeUpTime from sleep_time;");
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			Date d = null;
+			int total = 0;
+			while (!cur.isAfterLast()) {
+				try {
+					d = Global.lastModDateFormat.parse(cur.getString(0));
+					total += d.getHours() * 60 + d.getMinutes();
+				} catch (ParseException e) {
+					e.printStackTrace();
+					continue;
+				}
+			}
+			return total / cur.getCount();
+		} else if (modularName.equals(Global.SLEEP_DURATION)) {
+			String rawQuery = String.format("select avg(SleepDuration) from sleep_time;");
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			return cur.getInt(0);
+		} else {
+			String rawQuery = String.format("select avg(QuestionValue) from question where QuestionType='%s';", modularName);
+			Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+			if (cur.getCount() < 1)
+				return -1;
+			cur.moveToFirst();
+			return cur.getFloat(0);
+		}
+	}
+
+	public static int getStatic(Context c) {
+		String rawQuery = String.format("select count(*) from question union select count(*) from sleep_time;");
+		Cursor cur = DBContentProvider.rawQuery(c, rawQuery);
+		if (cur.getCount() < 1)
+			return -1;
+		cur.moveToFirst();
+		return cur.getInt(0);
 	}
 }
