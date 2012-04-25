@@ -1,11 +1,13 @@
 package edu.neu.hci;
 
 import edu.mit.android.wocketsver1.ActivityMonitor.BluetoothSensorService;
+
 import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
 import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
 import edu.mit.android.wocketsver1.ActivityMonitor.Main;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
+import edu.neu.hci.alarm.StartSleepActivity;
 import edu.neu.hci.db.DBContentProvider;
 import android.app.Activity;
 import android.app.AlarmManager;
@@ -38,14 +40,18 @@ public class DuringSleepActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				stopSensor();
-				onBackPressed();
+				Intent i = new Intent();
+				// Set navigation, first parameter is source, second is target.
+				i.setClass(DuringSleepActivity.this, StartSleepActivity.class);
+				startActivity(i);
+				
 			}
 		});
 		stopTrackingBtn.setOnClickListener(new OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				stopSensor();
+				//stopSensor();
 				Intent i = new Intent();
 				// Set navigation, first parameter is source, second is target.
 				i.setClass(DuringSleepActivity.this, GoodSleepActivity.class);
