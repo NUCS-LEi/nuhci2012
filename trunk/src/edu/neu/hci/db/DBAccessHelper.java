@@ -344,6 +344,7 @@ public class DBAccessHelper {
 					e.printStackTrace();
 					continue;
 				}
+				cur.moveToNext();
 			}
 			return total / cur.getCount();
 		} else if (modularName.equals(Global.WAKE_UP_TIME)) {
@@ -362,6 +363,7 @@ public class DBAccessHelper {
 					e.printStackTrace();
 					continue;
 				}
+				cur.moveToNext();
 			}
 			return total / cur.getCount();
 		} else if (modularName.equals(Global.SLEEP_DURATION)) {

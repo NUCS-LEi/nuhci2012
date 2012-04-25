@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -57,6 +58,7 @@ public class SleepSummaryDetail extends Activity {
 		for (int i = 0; i < maxRows; i++) {
 			int last = DBAccessHelper.getLastNightStatic(getApplicationContext(), summaryDetail.get(i)[0]);
 			float avg = DBAccessHelper.getAverageStatic(getApplicationContext(), summaryDetail.get(i)[0]);
+			
 			if (last == -1)
 				continue;
 			View v = LayoutInflater.from(this).inflate(R.layout.summary_detail_item, null);
