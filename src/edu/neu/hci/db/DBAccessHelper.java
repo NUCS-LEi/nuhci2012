@@ -182,8 +182,11 @@ public class DBAccessHelper {
 		ContentValues cv = new ContentValues();
 		if (point == null)
 			return 0;
-		cv.put("WocketRecordedTime", point.mWocketRecordedTime.format("yyyy-MM-dd HH:mm:ss SSS"));
-		cv.put("PhoneReadTime", point.mPhoneReadTime.format("yyyy-MM-dd HH:mm:ss SSS"));
+		Date date=new Date();
+		date.setTime(point.mWocketRecordedTime.toMillis(true));
+		cv.put("WocketRecordedTime", Global.exactDateFormat.format(date));
+		date.setTime(point.mPhoneReadTime.toMillis(true));
+		cv.put("PhoneReadTime", Global.exactDateFormat.format(date));
 		cv.put("Written", point.mWritten);
 		cv.put("SeqNum", point.mSeqNum);
 		cv.put("Value", point.mValue);
@@ -195,8 +198,11 @@ public class DBAccessHelper {
 		ContentValues cv = new ContentValues();
 		if (point == null)
 			return 0;
-		cv.put("WocketRecordedTime", point.mWocketRecordedTime.format("yyyy-MM-dd HH:mm:ss SSS"));
-		cv.put("PhoneReadTime", point.mPhoneReadTime.format("yyyy-MM-dd HH:mm:ss SSS"));
+		Date date=new Date();
+		date.setTime(point.mWocketRecordedTime.toMillis(true));
+		cv.put("WocketRecordedTime", Global.exactDateFormat.format(date));
+		date.setTime(point.mPhoneReadTime.toMillis(true));
+		cv.put("PhoneReadTime", Global.exactDateFormat.format(date));
 		cv.put("X", point.mX);
 		cv.put("Y", point.mY);
 		cv.put("Z", point.mZ);

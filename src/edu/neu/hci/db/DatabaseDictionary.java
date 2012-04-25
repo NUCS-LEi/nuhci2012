@@ -68,7 +68,7 @@ public class DatabaseDictionary {
 			{
 					SUMMARY_POINT_TABLE,
 					"WocketRecordedTime TEXT NOT NULL," + "PhoneReadTime TEXT DEFAULT NULL," + "Written TEXT DEFAULT NULL," + "SeqNum int DEFAULT 0,"
-							+ "Value int DEFAULT 0," + "PRIMARY KEY (WocketRecordedTime)" } };
+							+ "Value int DEFAULT 0," + "PRIMARY KEY (WocketRecordedTime,SeqNum)" } };
 
 	public static HashMap<String, String[]> getTableCols() {
 		HashMap<String, String[]> tableCols = new HashMap<String, String[]>();

@@ -295,7 +295,7 @@ public class DataStore {
 	 * @param address
 	 *            - the Bluetooth sensor MAC address
 	 */
-	public static void checkAndAddSensor(String name, String address) {
+	public static void checkAndAddSensor(Context c, String name, String address) {
 		if (getSensor(name) != null) {
 			return;
 		}
@@ -305,7 +305,7 @@ public class DataStore {
 		} else if (name.contains(Defines.POLAR_DEVICE_NAME)) {
 			mSensors.add(new PolarSensor(name, address));
 		} else if (name.contains(Defines.WOCKET_DEVICE_NAME)) {
-			mSensors.add(new WocketSensor(name, address));
+			mSensors.add(new WocketSensor(c, name, address));
 		}
 	}
 
@@ -393,7 +393,7 @@ public class DataStore {
 			Iterator<BluetoothDevice> itr = devices.iterator();
 			while (itr.hasNext()) {
 				BluetoothDevice dev = itr.next();
-				DataStore.checkAndAddSensor(dev.getName(), dev.getAddress());
+				DataStore.checkAndAddSensor(context, dev.getName(), dev.getAddress());
 
 			}
 		}

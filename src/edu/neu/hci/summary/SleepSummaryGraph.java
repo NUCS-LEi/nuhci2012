@@ -1,16 +1,34 @@
 package edu.neu.hci.summary;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.achartengine.ChartFactory;
+import org.achartengine.GraphicalView;
+import org.achartengine.chart.LineChart;
+import org.achartengine.chart.PointStyle;
+import org.achartengine.model.XYMultipleSeriesDataset;
+import org.achartengine.model.XYSeries;
+import org.achartengine.renderer.XYMultipleSeriesRenderer;
+import org.achartengine.renderer.XYSeriesRenderer;
+
 import android.app.Activity;
+import android.app.ActivityGroup;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.Paint.Align;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
 import edu.neu.hci.db.DBAccessHelper;
@@ -19,6 +37,11 @@ import edu.neu.hci.graph.GraphData;
 
 public class SleepSummaryGraph extends Activity {
 	private Button btn;
+	private GraphData data;
+	private XYMultipleSeriesRenderer render;
+	private XYSeries series;
+	private GraphicalView gv;
+	private XYSeriesRenderer xyRender;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,11 +75,10 @@ public class SleepSummaryGraph extends Activity {
 			super.onPostExecute(data);
 			if (data != null) {
 				DrawGraph graph = new DrawGraph();
-				Intent intent = graph.execute(SleepSummaryGraph.this, data);
-				if (intent != null) {
-					startActivity(intent);
-				}
-				SleepSummaryGraph.this.finish();
+				LinearLayout layout = (LinearLayout) findViewById(R.id.containerBody);
+				gv = graph.getGraphView(getApplicationContext(), data);
+				layout.removeAllViews();
+				layout.addView(gv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
 			}
 		}
 
@@ -72,5 +94,4 @@ public class SleepSummaryGraph extends Activity {
 				return null;
 		}
 	}
-
 }

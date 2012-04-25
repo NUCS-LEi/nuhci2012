@@ -6,6 +6,7 @@ import java.util.Locale;
 import android.app.PendingIntent;
 
 public class Global {
+	public static final String DEFAULT_WOCKET_NAME="Wocket-D376";
 	public static PendingIntent mAlarmSender = null;
 	public static String TAG = "GoodSleep";
 	public static String ALARM = "edu.neu.hci.ALARM";
