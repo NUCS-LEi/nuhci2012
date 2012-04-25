@@ -3,30 +3,31 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
-
+
     <TextView
         style="@style/title"
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="1.47"
-        android:text="Have a Good Sleep!" />
-
+        android:layout_weight="2.94"
+      
+        android:text="You can now leave your phone and go to bed." />
+
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="0px"
-        android:layout_weight="6.73"
+        android:layout_weight="6.30"
         android:gravity="top"
-        android:paddingLeft="15dp"
+        android:paddingLeft="25dp"
         android:paddingRight="15dp"
-        android:text="Please put your phone in the corner of your bed and Keep it there during your entire sleep time."
-        android:textSize="25dp" />
+        android:text="Please keep wearing your wristband sensor during your entire sleep time.  Have a Good Sleep!"
+        android:textSize="28sp" />
 
     <TextView
         android:id="@+id/textView1"
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="3"
-        android:paddingLeft="15dp"
+        android:paddingLeft="25dp"
         android:text="Alarm time:   6:00 AM"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:textSize="24sp" />
