@@ -5,14 +5,11 @@ import java.util.Date;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
 import android.media.RingtoneManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.SystemClock;
@@ -33,12 +30,9 @@ import common.wheel.widget.WheelView;
 import edu.mit.android.wocketsver1.ActivityMonitor.BluetoothSensorService;
 import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
 import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
-import edu.mit.android.wocketsver1.ActivityMonitor.Main;
-import edu.mit.android.wocketsver1.ActivityMonitor.Main.HRUpdateReceiver;
 import edu.neu.hci.Global;
 import edu.neu.hci.R;
 import edu.neu.hci.db.DBAccessHelper;
-import edu.neu.hci.db.DatabaseDictionary;
 
 public class StartSleepActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 	private String clockTime;
@@ -101,6 +95,9 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 				}
 				saveAlarm();
 				startSensor();
+				Date date=new Date();
+				int time=date.getHours()*60+date.getMinutes();
+				DBAccessHelper.insertOrUpdateQuestion(getApplicationContext(), Global.GO_TO_BED_TIME, time);
 				Intent i = new Intent();
 				// Set navigation, first parameter is source, second is target.
 				i.setClass(StartSleepActivity.this, DuringSleepActivity.class);

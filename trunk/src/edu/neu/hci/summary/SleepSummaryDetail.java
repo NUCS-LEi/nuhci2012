@@ -7,16 +7,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
+import edu.neu.hci.db.DBAccessHelper;
 
 public class SleepSummaryDetail extends Activity {
 	private LinearLayout statInfo;
@@ -42,93 +42,153 @@ public class SleepSummaryDetail extends Activity {
 	}
 
 	private void refreshGrid() {
-		String[][] s = new String[][] { { "Sleep Score", " " }, { "Sleep Duration", " " }, { "Go To Bed Time", " " }, { "Wake Up Time", " " },
-				{ "Caffeine", " " }, { "Alcohol", " " }, { "Smoke", " " }, { "Physical Activity", " " }, { "Food", " " }, { "Stress", " " } };
+		String[][] modular = new String[][] { { Global.SLEEP_SCORE, "Sleep Score" }, { Global.SLEEP_DURATION, "Sleep Duration" },
+				{ Global.GO_TO_BED_TIME, "Go To Bed Time" }, { Global.WAKE_UP_TIME, "Wake Up Time" }, { Global.CAFFEINE, "Caffeine" },
+				{ Global.ALCOHOL, "Alcohol" }, { Global.SMOKE, "Smoke" }, { Global.PA, "Physical Activity" }, { Global.FOOD, "Food" },
+				{ Global.STRESS, "Stress" } };
 		ArrayList<String[]> summaryDetail = new ArrayList<String[]>();
-		for (int i = 0; i < s.length; i++) {
-			summaryDetail.add(s[i]);
+		for (int i = 0; i < modular.length; i++) {
+			summaryDetail.add(modular[i]);
 		}
 		int maxRows = (summaryDetail != null) ? Math.max(10, summaryDetail.size()) : 10;
 		statGrid.removeAllViews();
 		statInfo.setVisibility(View.VISIBLE);
+		int colorCount = 0;
 		for (int i = 0; i < maxRows; i++) {
+			int last = DBAccessHelper.getLastNightStatic(getApplicationContext(), summaryDetail.get(i)[0]);
+			float avg = DBAccessHelper.getAverageStatic(getApplicationContext(), summaryDetail.get(i)[0]);
+			if (last == -1)
+				continue;
 			View v = LayoutInflater.from(this).inflate(R.layout.summary_detail_item, null);
 
 			TextView statName = (TextView) v.findViewById(R.id.statName);
-			ImageView img = (ImageView) findViewById(R.id.img);
+			ImageView img = (ImageView) v.findViewById(R.id.quesImg);
 			ImageView statValue1 = (ImageView) v.findViewById(R.id.statValue1);
 			ImageView statValue2 = (ImageView) v.findViewById(R.id.statValue2);
 
 			// Create stripes
-			int backgroundColor = (i % 2 == 0) ? Color.WHITE : Color.LTGRAY;
+			int backgroundColor = (colorCount % 2 == 0) ? Color.WHITE : Color.LTGRAY;
+			colorCount++;
 			v.setBackgroundColor(backgroundColor);
 			img.setBackgroundColor(backgroundColor);
 			statName.setBackgroundColor(backgroundColor);
 			statValue1.setBackgroundColor(backgroundColor);
 			statValue2.setBackgroundColor(backgroundColor);
 
-			// if (summaryDetail == null || summaryDetail.size() <= i) {
-			// statName.setText("");
-			// // statValue.setText("");
-			// } else {
-			statName.setText(summaryDetail.get(i)[0]+i);
-			if (i % 2 == 0)
+			statName.setText(summaryDetail.get(i)[1]);
+			img.setImageResource(R.drawable.question);
+			if (last < avg)
 				statValue1.setImageResource(R.drawable.down);
-			else
+			else if (last > avg)
 				statValue1.setImageResource(R.drawable.up);
-			if (i % 3 == 0)
-				statValue2.setImageResource(R.drawable.t_down);
 			else
-				statValue2.setImageResource(R.drawable.t_up);
-			// if (summaryDetail.get(i)[1] == null ||
-			// summaryDetail.get(i)[1].equals("") ||
-			// summaryDetail.get(i)[1].equals("null"))
-			// statValue.setText(" ");
-			// else
-			// statValue.setText(summaryDetail.get(i)[1]);
-			// }
-			v.setTag(String.valueOf(i));
+				statValue1.setImageResource(R.drawable.equal);
+			if (summaryDetail.get(i)[0].equals(Global.SLEEP_SCORE)) {
+				if (last < avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.SLEEP_DURATION)) {
+				if (last < avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.GO_TO_BED_TIME)) {
+				if (Math.abs(last - avg) > 3600 * 1000)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.WAKE_UP_TIME)) {
+				if (Math.abs(last - avg) > 3600 * 1000)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.CAFFEINE)) {
+				if (last > avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.ALCOHOL)) {
+				if (last > avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.FOOD)) {
+				if (last > avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.SMOKE)) {
+				if (last > avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.PA)) {
+				if (last > avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			} else if (summaryDetail.get(i)[0].equals(Global.STRESS)) {
+				if (last > avg)
+					statValue2.setImageResource(R.drawable.t_down);
+				else
+					statValue2.setImageResource(R.drawable.t_up);
+			}
+			v.setTag(summaryDetail.get(i)[0]);
 			v.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					v.setDrawingCacheBackgroundColor(Color.GREEN);
 					Intent intent = null;
-					if (v.getTag().toString().equals("0")) {
+					if (v.getTag().toString().equals(Global.SLEEP_SCORE)) {
 						intent = new Intent(SleepSummaryDetail.this, SleepScoreActivity.class);
 					}
-					if (v.getTag().toString().equals("1")) {
+					if (v.getTag().toString().equals(Global.SLEEP_DURATION)) {
 						intent = new Intent(SleepSummaryDetail.this, SleepDurationActivity.class);
 					}
-					if (v.getTag().toString().equals("2")) {
+					if (v.getTag().toString().equals(Global.GO_TO_BED_TIME)) {
 						intent = new Intent(SleepSummaryDetail.this, GoToBedTimeActivity.class);
 					}
-					if (v.getTag().toString().equals("3")) {
+					if (v.getTag().toString().equals(Global.WAKE_UP_TIME)) {
 						intent = new Intent(SleepSummaryDetail.this, WakeUpTimeActivity.class);
 					}
-					if (v.getTag().toString().equals("4")) {
+					if (v.getTag().toString().equals(Global.CAFFEINE)) {
 						intent = new Intent(SleepSummaryDetail.this, CaffeineActivity.class);
 					}
-					if (v.getTag().toString().equals("5")) {
+					if (v.getTag().toString().equals(Global.ALCOHOL)) {
 						intent = new Intent(SleepSummaryDetail.this, AlcoholActivity.class);
 					}
-					if (v.getTag().toString().equals("6")) {
+					if (v.getTag().toString().equals(Global.SMOKE)) {
 						intent = new Intent(SleepSummaryDetail.this, SmokingActivity.class);
 					}
-					if (v.getTag().toString().equals("7")) {
+					if (v.getTag().toString().equals(Global.PA)) {
 						intent = new Intent(SleepSummaryDetail.this, PhysicalActivity.class);
 					}
-					if (v.getTag().toString().equals("8")) {
+					if (v.getTag().toString().equals(Global.FOOD)) {
 						intent = new Intent(SleepSummaryDetail.this, FoodActivity.class);
 					}
-					if (v.getTag().toString().equals("9")) {
+					if (v.getTag().toString().equals(Global.STRESS)) {
 						intent = new Intent(SleepSummaryDetail.this, StressActivity.class);
 					}
 					if (intent != null)
-						// android.util.Log.e("DUBUG", "debug:" +
-						// v.getTag().toString());
 						startActivity(intent);
 				}
 			});
+			statGrid.addView(v);
+		}
+		if (colorCount == 0) {
+			View v = LayoutInflater.from(this).inflate(R.layout.summary_detail_item, null);
+			TextView statName = (TextView) v.findViewById(R.id.statName);
+			ImageView img = (ImageView) v.findViewById(R.id.quesImg);
+			ImageView statValue1 = (ImageView) v.findViewById(R.id.statValue1);
+			ImageView statValue2 = (ImageView) v.findViewById(R.id.statValue2);
+			int backgroundColor = Color.WHITE;
+			v.setBackgroundColor(backgroundColor);
+			img.setBackgroundColor(backgroundColor);
+			statName.setBackgroundColor(backgroundColor);
+			statValue1.setBackgroundColor(backgroundColor);
+			statValue2.setBackgroundColor(backgroundColor);
+			statName.setText("No Data Of Last Night Sleep");
 			statGrid.addView(v);
 		}
 	}

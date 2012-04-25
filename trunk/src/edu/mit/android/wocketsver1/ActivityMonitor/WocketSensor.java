@@ -16,16 +16,14 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-
-import edu.mit.android.wocketsver1.mhealth.sensordata.SensorData;
-import edu.mit.android.wocketsver1.mhealth.sensordata.WocketSensorData;
-import edu.neu.hci.Global;
-import edu.neu.hci.db.DBAccessHelper;
 
 import android.content.Context;
 import android.text.format.Time;
 import android.util.Log;
+import edu.mit.android.wocketsver1.mhealth.sensordata.SensorData;
+import edu.mit.android.wocketsver1.mhealth.sensordata.WocketSensorData;
+import edu.neu.hci.Global;
+import edu.neu.hci.db.DBAccessHelper;
 
 public class WocketSensor extends Sensor {
 

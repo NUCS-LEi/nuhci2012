@@ -2,8 +2,6 @@ package edu.mit.android.wocketsver1.mhealth.sensordata;
 
 import java.util.Date;
 
-import android.text.format.Time;
-
 public class WocketSensorData extends SensorData {
 	private static final String TAG = "WocketSensorData";
 	

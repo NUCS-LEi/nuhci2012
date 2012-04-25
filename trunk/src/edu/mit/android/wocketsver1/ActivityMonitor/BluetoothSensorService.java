@@ -38,12 +38,10 @@ import android.os.PowerManager;
 import android.os.RemoteException;
 import android.os.Vibrator;
 import android.text.format.Time;
-import android.util.Log;
 import edu.mit.android.wocketsver1.ActivityMonitor.Sensor.TYPE;
 import edu.mit.android.wocketsver1.mhealth.sensordata.DataSaver;
 import edu.neu.hci.Global;
 import edu.neu.hci.R;
-import edu.neu.hci.db.DBAccessHelper;
 
 public class BluetoothSensorService extends Service {
 	static final String TAG = "BluetoothSensorService";
