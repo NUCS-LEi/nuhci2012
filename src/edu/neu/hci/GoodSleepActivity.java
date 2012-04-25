@@ -99,27 +99,23 @@ public class GoodSleepActivity extends Activity {
 	}
 
 	public boolean onCreateOptionsMenu(Menu menu) {
+		menu.add(0, 0, 0, "ImportDB");
 		menu.add(0, 1, 1, "ExportDB");
 		menu.add(0, 2, 2, "Sensors");
-		menu.add(1, 3, 3, "Create Fake Data");
-		menu.add(1, 4, 4, "Clear Fake Data");
 		return super.onCreateOptionsMenu(menu);
 	}
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		super.onOptionsItemSelected(item);
 		switch (item.getItemId()) {
+		case 0:
+			DBContentProvider.importLogStatDB(getApplicationContext());
+			break;
 		case 1:
 			DBContentProvider.exportLogStatDB();
 			break;
 		case 2:
 			showDialog(0);
-			break;
-		case 3:
-			createFakeData(getApplicationContext());
-			break;
-		case 4:
-			clearFakeData(getApplicationContext());
 			break;
 		default:
 			break;

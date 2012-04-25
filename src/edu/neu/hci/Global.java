@@ -10,7 +10,7 @@ public class Global {
 	public static PendingIntent mAlarmSender = null;
 	public static String TAG = "GoodSleep";
 	public static String ALARM = "edu.neu.hci.ALARM";
-	public static long SNOOZE_TIME = 1 * 60 * 1000;
+	public static long SNOOZE_TIME = 10 * 60 * 1000;
 	public static SimpleDateFormat normalDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	public static SimpleDateFormat lastModDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	public static SimpleDateFormat exactDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss SSS", Locale.US);
