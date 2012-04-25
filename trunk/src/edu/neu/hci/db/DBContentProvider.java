@@ -1,7 +1,9 @@
 package edu.neu.hci.db;
 
+import java.io.BufferedOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -296,6 +298,33 @@ public class DBContentProvider extends ContentProvider {
 			e.printStackTrace();
 			return e.toString();
 		}
+	}
+	public static Boolean importLogStatDB(Context context) {
+		InputStream myInput;
+		try {
+			myInput = new FileInputStream(FileHelper.getSDCard().getAbsolutePath() + "/"
+					+ DatabaseDictionary.externalDBPathFile);
+			OutputStream myOutput = new BufferedOutputStream(new FileOutputStream(
+					DatabaseDictionary.internalDBPathFile, false));
+			byte[] buffer = new byte[8192];
+			int length;
+			while ((length = myInput.read(buffer)) > 0) {
+				myOutput.write(buffer, 0, length);
+			}
+			myOutput.flush();
+			myInput.close();
+			myOutput.close();
+			return true;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return false;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		} 
 	}
 
 	public static Cursor rawQuery(Context c, String sql) {

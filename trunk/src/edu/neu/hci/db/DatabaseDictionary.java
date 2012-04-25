@@ -29,7 +29,7 @@ public class DatabaseDictionary {
 	public static String PACKAGE_NAME = "edu.neu.hci";
 	public static String internalDBPath = "/data" + Environment.getDataDirectory().getAbsolutePath() + "/" + PACKAGE_NAME + "/databases/";
 	public static String internalDBFile = "good_sleep.sqlite";
-	public static String externalDBPath = "/.goodsleep/db/";
+	public static String externalDBPath = "/goodsleep/db/";
 	public static String externalDBFile = "good_sleep.sqlite";
 	public static final String STAT_DATABASE_NAME = "good_sleep.sqlite";
 	public static String internalDBPathFile = internalDBPath + STAT_DATABASE_NAME;
