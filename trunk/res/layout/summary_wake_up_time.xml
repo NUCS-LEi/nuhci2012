@@ -18,8 +18,7 @@
         android:layout_weight="9"
         android:gravity="top"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="Keep a consistent wake up time each day, seven days per week. Today you woke up later/sooner than your average wake up time." />
+        android:paddingRight="15dp"/>
 
     <LinearLayout
         android:layout_width="fill_parent"

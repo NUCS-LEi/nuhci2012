@@ -2,6 +2,7 @@ package edu.neu.hci;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.Set;
@@ -58,6 +59,8 @@ public class GoodSleepActivity extends Activity {
 		img = (ImageView) findViewById(R.id.imageView1);
 		list = new ArrayList<CharSequence>();
 		adapter = new ArrayAdapter<CharSequence>(this, android.R.layout.simple_spinner_item, list);
+		if (Global.QUESTION_CONFIRM == null)
+			Global.QUESTION_CONFIRM = new HashMap<String, Boolean>();
 	}
 
 	@Override
@@ -86,7 +89,8 @@ public class GoodSleepActivity extends Activity {
 				// Set navigation, first parameter is source, second is target.
 				i.setClass(GoodSleepActivity.this, SettingQuestionActivity.class);
 				Date date = new Date();
-				if (Global.QUESTION_CONFIRM.get(Global.normalDateFormat.format(date)) == true)
+				if (Global.QUESTION_CONFIRM.get(Global.normalDateFormat.format(date)) != null
+						&& Global.QUESTION_CONFIRM.get(Global.normalDateFormat.format(date)) == true)
 					i.setClass(GoodSleepActivity.this, QuestionnaireFeedbackActivity.class);
 				startActivity(i);
 			}
