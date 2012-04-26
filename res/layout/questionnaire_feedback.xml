@@ -12,6 +12,7 @@
         android:text="Thank you!" />
 
 <TextView
+    android:id="@+id/feedbackText"
     android:layout_width="fill_parent"
     android:layout_height="0px"
     android:layout_weight="6.73"

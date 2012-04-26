@@ -30,6 +30,7 @@ import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
 import edu.mit.android.wocketsver1.ActivityMonitor.Sensor;
 import edu.neu.hci.db.DBAccessHelper;
 import edu.neu.hci.db.DBContentProvider;
+import edu.neu.hci.questionaire.QuestionnaireFeedbackActivity;
 import edu.neu.hci.questionaire.SettingQuestionActivity;
 import edu.neu.hci.summary.SleepSummaryMain;
 
@@ -84,6 +85,9 @@ public class GoodSleepActivity extends Activity {
 				Intent i = new Intent();
 				// Set navigation, first parameter is source, second is target.
 				i.setClass(GoodSleepActivity.this, SettingQuestionActivity.class);
+				Date date = new Date();
+				if (Global.QUESTION_CONFIRM.get(Global.normalDateFormat.format(date)) == true)
+					i.setClass(GoodSleepActivity.this, QuestionnaireFeedbackActivity.class);
 				startActivity(i);
 			}
 		});

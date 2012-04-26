@@ -15,7 +15,9 @@
  */
 package edu.neu.hci.graph;
 
+import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.achartengine.ChartFactory;
@@ -25,6 +27,9 @@ import org.achartengine.chart.PointStyle;
 import org.achartengine.model.XYMultipleSeriesDataset;
 import org.achartengine.renderer.XYMultipleSeriesRenderer;
 import org.achartengine.renderer.XYSeriesRenderer;
+
+import edu.neu.hci.Global;
+import edu.neu.hci.db.DBAccessHelper;
 
 import android.content.Context;
 import android.content.Intent;
@@ -161,10 +166,25 @@ public class DrawGraph extends AbstractDemoChart {
 		for (int i = 0; i < length; i++) {
 			((XYSeriesRenderer) renderer.getSeriesRendererAt(i)).setFillPoints(true);
 		}
-		setChartSettings(renderer, "Sleep Reported", "Sleep Time", "Phrase", 0, finishDate + 10, lowerBound0 - 10, upperBound0 + 10, Color.LTGRAY,
+		setChartSettings(renderer, "Sleep Report", "Sleep Time", "Phrase", 0, finishDate + 10, lowerBound0 - 10, upperBound0 + 10, Color.LTGRAY,
 				Color.LTGRAY);
-		renderer.setXLabels(12);
-		renderer.setYLabels(10);
+		renderer.setXLabels(0);
+		Date date = null;
+		try {
+			date = Global.lastModDateFormat.parse(DBAccessHelper.getLastNightSleepTime(context));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		for (int i = 0; i < time.length; i++) {
+			if (i % 60 == 0) {
+				date.setTime(date.getTime() + i * 60 * 1000);
+				renderer.addXTextLabel(i, Global.apmDateFormat.format(date));
+			}
+		}
+		renderer.setYLabels(0);
+		renderer.addYTextLabel(Global.DEEP_SLEEP, "Deep");
+		renderer.addYTextLabel(Global.LIGHT_SLEEP_THRESHOLD, "Light");
+		renderer.addYTextLabel(Global.WAKE_THRESHOLD, "Wake");
 		renderer.setShowGrid(true);
 		renderer.setXLabelsAlign(Align.CENTER);
 		renderer.setYLabelsAlign(Align.CENTER);
@@ -175,5 +195,4 @@ public class DrawGraph extends AbstractDemoChart {
 		return gv;
 
 	}
-
 }

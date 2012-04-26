@@ -30,7 +30,7 @@ public class SleepSummaryMain extends TabActivity {
 		spec = tabHost.newTabSpec("tab2").setIndicator("Graph").setContent(intent);
 		tabHost.addTab(spec);
 
-		tabHost.setCurrentTab(0);
+		tabHost.setCurrentTab(1);
 	}
 
 }

@@ -11,14 +11,14 @@
         android:layout_weight="1"
         android:text="" />
     <TextView
+        android:id="@+id/goToBedTimeTV"
         android:textSize="25dp"
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="9"
         android:gravity="top"
         android:paddingLeft="15dp"
-        android:paddingRight="15dp"
-        android:text="Keep a consistent bedtime during all days of the week, including weekends. Last night you slept later/sooner than your average bedtime." />
+        android:paddingRight="15dp"/>
 
     <LinearLayout
         android:layout_width="fill_parent"

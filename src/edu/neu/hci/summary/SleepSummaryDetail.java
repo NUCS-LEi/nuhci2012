@@ -58,7 +58,7 @@ public class SleepSummaryDetail extends Activity {
 		for (int i = 0; i < maxRows; i++) {
 			int last = DBAccessHelper.getLastNightStatic(getApplicationContext(), summaryDetail.get(i)[0]);
 			float avg = DBAccessHelper.getAverageStatic(getApplicationContext(), summaryDetail.get(i)[0]);
-			
+
 			if (last == -1)
 				continue;
 			View v = LayoutInflater.from(this).inflate(R.layout.summary_detail_item, null);
@@ -79,11 +79,13 @@ public class SleepSummaryDetail extends Activity {
 
 			statName.setText(summaryDetail.get(i)[1]);
 			img.setImageResource(R.drawable.question);
-			if (last < avg)
+			if (last < avg) {
+				v.setTag(0, 0);
 				statValue1.setImageResource(R.drawable.down);
-			else if (last > avg)
+			} else if (last > avg) {
+				v.setTag(0, 1);
 				statValue1.setImageResource(R.drawable.up);
-			else
+			} else
 				statValue1.setImageResource(R.drawable.equal);
 			if (summaryDetail.get(i)[0].equals(Global.SLEEP_SCORE)) {
 				if (last < avg)
@@ -147,30 +149,39 @@ public class SleepSummaryDetail extends Activity {
 					}
 					if (v.getTag().toString().equals(Global.SLEEP_DURATION)) {
 						intent = new Intent(SleepSummaryDetail.this, SleepDurationActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.GO_TO_BED_TIME)) {
 						intent = new Intent(SleepSummaryDetail.this, GoToBedTimeActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.WAKE_UP_TIME)) {
 						intent = new Intent(SleepSummaryDetail.this, WakeUpTimeActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.CAFFEINE)) {
 						intent = new Intent(SleepSummaryDetail.this, CaffeineActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.ALCOHOL)) {
 						intent = new Intent(SleepSummaryDetail.this, AlcoholActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.SMOKE)) {
 						intent = new Intent(SleepSummaryDetail.this, SmokingActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.PA)) {
 						intent = new Intent(SleepSummaryDetail.this, PhysicalActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.FOOD)) {
 						intent = new Intent(SleepSummaryDetail.this, FoodActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (v.getTag().toString().equals(Global.STRESS)) {
 						intent = new Intent(SleepSummaryDetail.this, StressActivity.class);
+						intent.putExtra("compare", (Integer) v.getTag(0));
 					}
 					if (intent != null)
 						startActivity(intent);

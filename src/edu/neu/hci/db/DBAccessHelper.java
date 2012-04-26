@@ -143,6 +143,17 @@ public class DBAccessHelper {
 		}
 	}
 
+	public static int getLastQuestion(Context c, String type) {
+		Cursor cursor = DBContentProvider.rawQuery(c, "select QuestionValue from " + DatabaseDictionary.QUESTION_TABLE + " where QuestionType='"
+				+ type + "' order by LastModDate desc limit 1;");
+		if (cursor.getCount() == 0)
+			return -1;
+		else {
+			cursor.moveToFirst();
+			return cursor.getInt(0);
+		}
+	}
+
 	public static int insertOrUpdateSleepTime(Context c, String goToBedTime, String wakeUpTime) {
 		ContentValues cv = new ContentValues();
 		Date date = new Date();
@@ -178,6 +189,32 @@ public class DBAccessHelper {
 
 	public static String getLastSleepTime(Context c) {
 		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE + " order by CreateDate desc limit 1;");
+		if (cursor.getCount() == 0)
+			return null;
+		else {
+			cursor.moveToFirst();
+			return cursor.getString(2);
+		}
+	}
+
+	public static String getLastNightSleepTime(Context c) {
+		Date date = new Date();
+		date.setTime(date.getTime() - 24 * 3600 * 1000);
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE + " where CreateDate='"
+				+ Global.normalDateFormat.format(date) + "';");
+		if (cursor.getCount() == 0)
+			return null;
+		else {
+			cursor.moveToFirst();
+			return cursor.getString(1);
+		}
+	}
+
+	public static String getLastNightWakeTime(Context c) {
+		Date date = new Date();
+		date.setTime(date.getTime() - 24 * 3600 * 1000);
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SLEEP_TIME_TABLE + " where CreateDate='"
+				+ Global.normalDateFormat.format(date) + "';");
 		if (cursor.getCount() == 0)
 			return null;
 		else {
@@ -222,55 +259,51 @@ public class DBAccessHelper {
 
 	public static ArrayList<double[]> getSummaryPoints(Context c) {
 		ArrayList<double[]> al = new ArrayList<double[]>();
-		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SUMMARY_POINT_TABLE);
+		String start = getLastNightSleepTime(c);
+		String sensorStart = "";
+		String end = getLastNightWakeTime(c);
+		String sensorEnd = "";
+		try {
+			sensorStart = Global.exactDateFormat.format(Global.lastModDateFormat.parse(start));
+			sensorEnd = Global.exactDateFormat.format(Global.lastModDateFormat.parse(end));
+		} catch (ParseException e) {
+			e.printStackTrace();
+		} catch (Exception e) {
+			return null;
+		}
+		Cursor cursor = DBContentProvider.rawQuery(c, "select * from " + DatabaseDictionary.SUMMARY_POINT_TABLE + " where WocketRecordedTime>'"
+				+ sensorStart + "' and WocketRecordedTime<'" + sensorEnd + "';");
 		if (cursor.getCount() == 0)
 			return null;
 		else {
 			double[] time = new double[cursor.getCount()];
 			double[] value = new double[cursor.getCount()];
-			double adjustValue = 0;
-			int count = 0;
-			int[] count_each = { 0, 0, 0 };
 			cursor.moveToFirst();
 			while (!cursor.isAfterLast()) {
-				// if (count < Global.GROUP_MINUTES) {
-				// time[cursor.getPosition()] = cursor.getPosition();
-				// if (cursor.getDouble(4) > Global.WAKE_THRESHOLD)
-				// count_each[0]++;
-				// else if (cursor.getDouble(4) > Global.LIGHT_SLEEP_THRESHOLD)
-				// count_each[1]++;
-				// else
-				// count_each[2]++;
-				// } else {
-				// android.util.Log.i(Global.TAG, "At " + cursor.getPosition() +
-				// " count_each[0]=" + count_each[0] + " count_each[1]="
-				// + count_each[1] + " count_each[2]=" + count_each[2]);
-				// if (count_each[0] > count_each[1] && count_each[0] >
-				// count_each[2])
-				// adjustValue = Global.WAKE_THRESHOLD;
-				// else if (count_each[1] > count_each[0] && count_each[1] >
-				// count_each[2])
-				// adjustValue = Global.LIGHT_SLEEP_THRESHOLD;
-				// else
-				// adjustValue = Global.DEEP_SLEEP;
-				// for (int i = cursor.getPosition() - Global.GROUP_MINUTES; i <
-				// Global.GROUP_MINUTES; i++) {
-				// value[i] = adjustValue;
-				// }
-				// count = 0;
-				// count_each[0] = 0;
-				// count_each[1] = 0;
-				// count_each[2] = 0;
-				// }
 				time[cursor.getPosition()] = cursor.getPosition();
-				if (cursor.getDouble(4) > Global.WAKE_THRESHOLD)
-					adjustValue = Global.WAKE_THRESHOLD;
-				else if (cursor.getDouble(4) > Global.LIGHT_SLEEP_THRESHOLD)
-					adjustValue = Global.LIGHT_SLEEP_THRESHOLD;
-				else
-					adjustValue = Global.DEEP_SLEEP;
-				value[cursor.getPosition()] = adjustValue;
+				value[cursor.getPosition()] = cursor.getDouble(4);
 				cursor.moveToNext();
+			}
+			int[] count = { 0, 0, 0 };
+			double adjustValue = 0;
+			for (int i = 0; i < value.length; i++) {
+				if ((i + 1) % Global.GROUP_MINUTES != 0) {
+					if (value[i] > Global.WAKE_THRESHOLD)
+						count[0]++;
+					else if (value[i] > Global.LIGHT_SLEEP_THRESHOLD)
+						count[1]++;
+					else
+						count[2]++;
+				} else {
+					if (count[0] > count[1] && count[0] > count[2])
+						adjustValue = Global.WAKE_THRESHOLD;
+					else if (count[1] > count[0] && count[1] > count[2])
+						adjustValue = Global.LIGHT_SLEEP_THRESHOLD;
+					else
+						adjustValue = Global.DEEP_SLEEP;
+					for (int j = i + 1; j >= Math.max(0, i - Global.GROUP_MINUTES); j--)
+						value[j] = adjustValue;
+				}
 			}
 			al.add(time);
 			al.add(value);

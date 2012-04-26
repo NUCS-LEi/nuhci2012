@@ -1,5 +1,7 @@
 package edu.neu.hci.alarm;
 
+import java.text.ParseException;
+
 import android.app.Activity;
 import android.app.AlarmManager;
 import android.content.Intent;
@@ -9,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.TextView;
 import edu.mit.android.wocketsver1.ActivityMonitor.BluetoothSensorService;
 import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
 import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
@@ -16,11 +19,13 @@ import edu.mit.android.wocketsver1.ActivityMonitor.Main;
 import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
+import edu.neu.hci.db.DBAccessHelper;
 import edu.neu.hci.db.DBContentProvider;
 
 public class DuringSleepActivity extends Activity {
 	private Button stopTrackingBtn;
 	private Button backBtn;
+	private TextView tv;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -28,12 +33,18 @@ public class DuringSleepActivity extends Activity {
 		setContentView(R.layout.good_night_with_sensor);
 		stopTrackingBtn = (Button) findViewById(R.id.stopTrackingBtn);
 		backBtn = (Button) findViewById(R.id.backBtn);
-
+		tv=(TextView)findViewById(R.id.textView1);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
+		try {
+			tv.setText("Alarm time:   "+Global.apmDateFormat.format(Global.lastModDateFormat.parse(DBAccessHelper.getLastSleepTime(getApplicationContext()))));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		backBtn.setOnClickListener(new OnClickListener() {
 
 			@Override

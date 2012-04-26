@@ -9,12 +9,14 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import edu.neu.hci.Global;
 import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
 import edu.neu.hci.db.DBAccessHelper;
@@ -27,7 +29,6 @@ public class SleepSummaryGraph extends Activity {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-		// TODO Auto-generated method stub
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.summary_graph);
 		btn = (Button) findViewById(R.id.btnBack);
@@ -58,6 +59,7 @@ public class SleepSummaryGraph extends Activity {
 			LinearLayout layout = (LinearLayout) findViewById(R.id.containerBody);
 			layout.removeAllViews();
 			if (data != null) {
+				Log.i(Global.TAG, "GraphData");
 				DrawGraph graph = new DrawGraph();
 				gv = graph.getGraphView(getApplicationContext(), data);
 				layout.addView(gv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));
