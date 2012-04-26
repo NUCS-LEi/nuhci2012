@@ -33,6 +33,7 @@ import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
 import edu.neu.hci.Global;
 import edu.neu.hci.R;
 import edu.neu.hci.db.DBAccessHelper;
+import edu.neu.hci.questionaire.QuestionnaireFeedbackActivity;
 
 public class StartSleepActivity extends PreferenceActivity implements Preference.OnPreferenceChangeListener {
 	private String clockTime;
@@ -66,7 +67,10 @@ public class StartSleepActivity extends PreferenceActivity implements Preference
 
 			@Override
 			public void onClick(View v) {
-				onBackPressed();
+				Intent i = new Intent();
+				
+				i.setClass(StartSleepActivity.this, QuestionnaireFeedbackActivity.class);
+				startActivity(i);
 			}
 		});
 		
