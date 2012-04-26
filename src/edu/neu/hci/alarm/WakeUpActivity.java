@@ -65,6 +65,7 @@ public class WakeUpActivity extends Activity {
 				}
 				stopService(new Intent(Alarms.ALARM_ALERT_ACTION));
 				Intent i = new Intent();
+				i.putExtra("src", "1");
 				i.setClass(WakeUpActivity.this, SleepSummaryMain.class);
 				startActivity(i);
 			}

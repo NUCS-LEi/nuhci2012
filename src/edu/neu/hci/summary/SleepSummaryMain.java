@@ -19,6 +19,10 @@ public class SleepSummaryMain extends TabActivity {
 		Resources res = getResources(); // Resource object to get Drawables
 		TabHost tabHost = getTabHost(); // The activity TabHost
 		TabSpec spec;
+		Bundle bundle = this.getIntent().getExtras();
+		int i = 0;
+		if (bundle != null && bundle.getString("src") != null)
+			i = 1;
 		Intent intent; // Reusable Intent for each tab
 		// TAB one
 		intent = new Intent(this, SleepSummaryDetail.class);
@@ -30,7 +34,7 @@ public class SleepSummaryMain extends TabActivity {
 		spec = tabHost.newTabSpec("tab2").setIndicator("Graph").setContent(intent);
 		tabHost.addTab(spec);
 
-		tabHost.setCurrentTab(1);
+		tabHost.setCurrentTab(i);
 	}
 
 }

@@ -50,7 +50,8 @@ public class QuestionnaireFeedbackActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		Date date = new Date();
-		if(Global.QUESTION_CONFIRM.get(Global.normalDateFormat.format(date))==true){
+		if (Global.QUESTION_CONFIRM.get(Global.normalDateFormat.format(date)) != null
+				&& Global.QUESTION_CONFIRM.get(Global.normalDateFormat.format(date)) == true) {
 			feedBackConfirmBtn.setText("Done");
 			feedBackModifyBtn.setVisibility(View.INVISIBLE);
 		}
