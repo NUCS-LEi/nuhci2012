@@ -59,7 +59,6 @@ public class SleepSummaryGraph extends Activity {
 			LinearLayout layout = (LinearLayout) findViewById(R.id.containerBody);
 			layout.removeAllViews();
 			if (data != null) {
-				Log.i(Global.TAG, "GraphData");
 				DrawGraph graph = new DrawGraph();
 				gv = graph.getGraphView(getApplicationContext(), data);
 				layout.addView(gv, new LayoutParams(LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));

@@ -35,6 +35,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Paint.Align;
+import android.util.Log;
 
 /**
  * Average temperature demo chart.
@@ -126,9 +127,12 @@ public class DrawGraph extends AbstractDemoChart {
 	public GraphicalView getGraphView(Context context, GraphData data) {
 		GraphicalView gv = null;
 		// value data
+		Log.i(Global.TAG, "1111");
 		List<double[]> dataList = data.getDataList();
 		double[] time = dataList.get(0);
 		double[] value = dataList.get(1);
+		for (int i = 0; i < time.length; i++)
+			Log.i(Global.TAG, String.valueOf(time[i]) + ":" + String.valueOf(value[i]));
 		double finishDate = time[time.length - 1];
 		double upperBound0 = value[0];
 		double lowerBound0 = value[0];
