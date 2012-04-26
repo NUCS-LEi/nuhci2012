@@ -11,6 +11,7 @@
         android:layout_weight="1"
         android:text="" />
     <TextView
+        android:id="@+id/wakeUpTimeTV"
         android:textSize="25dp"
         android:layout_width="fill_parent"
         android:layout_height="0px"

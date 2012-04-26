@@ -10,23 +10,23 @@
         android:layout_height="0px"
         android:layout_weight="1"
         android:text="" />
+
     <TextView
-        android:textSize="25dp"
+        android:id="@+id/alcoholTV"
         android:layout_width="fill_parent"
         android:layout_height="0px"
         android:layout_weight="9"
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Avoid excessive consumption of alcohol in the evening. Yesterday you drank more/less than your average." />
+        android:textSize="25dp" />
 
     <LinearLayout
+        style="@style/menu_bg"
         android:layout_width="fill_parent"
         android:layout_height="70dp"
         android:gravity="center|right"
-        android:orientation="horizontal" 
-        style="@style/menu_bg">
-
+        android:orientation="horizontal" >
 
         <Button
             android:id="@+id/alcoholDoneBtn"

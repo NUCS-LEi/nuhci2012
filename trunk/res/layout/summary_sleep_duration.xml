@@ -11,6 +11,7 @@
         android:layout_weight="1"
         android:text="" />
     <TextView
+        android:id="@+id/sleepDurationTV"
         android:textSize="25dp"
         android:layout_width="fill_parent"
         android:layout_height="0px"
@@ -18,7 +19,7 @@
         android:gravity="top"
         android:paddingLeft="15dp"
         android:paddingRight="15dp"
-        android:text="Get a consistent amount of sleep each day, seven days a week. Last night you slept more /less than your average sleep duration." />
+         />
 
     <LinearLayout
         android:layout_width="fill_parent"

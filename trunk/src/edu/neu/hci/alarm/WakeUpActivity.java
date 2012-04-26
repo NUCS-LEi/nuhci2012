@@ -1,5 +1,6 @@
 package edu.neu.hci.alarm;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 import android.app.Activity;
@@ -15,9 +16,9 @@ import edu.mit.android.wocketsver1.ActivityMonitor.BluetoothSensorService;
 import edu.mit.android.wocketsver1.ActivityMonitor.DataStore;
 import edu.mit.android.wocketsver1.ActivityMonitor.Defines;
 import edu.neu.hci.Global;
-import edu.neu.hci.GoodSleepActivity;
 import edu.neu.hci.R;
 import edu.neu.hci.db.DBAccessHelper;
+import edu.neu.hci.summary.SleepSummaryMain;
 
 public class WakeUpActivity extends Activity {
 	private Button stop;
@@ -51,11 +52,20 @@ public class WakeUpActivity extends Activity {
 				deleteSnooze();
 				stopSensor();
 				Date date = new Date();
-				String goToBedTime=DBAccessHelper.getLastSleepTime(getApplicationContext());
+				String goToBedTime = DBAccessHelper.getLastSleepTime(getApplicationContext());
 				DBAccessHelper.insertOrUpdateSleepTime(getApplicationContext(), goToBedTime, Global.lastModDateFormat.format(date));
+				ArrayList<double[]> sleepData = DBAccessHelper.getSummaryPoints(getApplicationContext());
+				if (sleepData != null) {
+					int count = 0;
+					for (double d : sleepData.get(1))
+						if (d < Global.WAKE_THRESHOLD)
+							count++;
+					DBAccessHelper.insertOrUpdateQuestion(getApplicationContext(), Global.SLEEP_SCORE,
+							Math.round(((float) count / sleepData.get(1).length) * 100));
+				}
 				stopService(new Intent(Alarms.ALARM_ALERT_ACTION));
 				Intent i = new Intent();
-				i.setClass(WakeUpActivity.this, GoodSleepActivity.class);
+				i.setClass(WakeUpActivity.this, SleepSummaryMain.class);
 				startActivity(i);
 			}
 		});

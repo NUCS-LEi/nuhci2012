@@ -1,6 +1,7 @@
 package edu.neu.hci;
 
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.Locale;
 
 import android.app.PendingIntent;
@@ -30,5 +31,5 @@ public class Global {
 	public static String SLEEP_DURATION = "sleep_duration";
 	public static String GO_TO_BED_TIME = "go_to_bed_time";
 	public static String WAKE_UP_TIME = "wake_up_time";
-
+	public static HashMap<String, Boolean> QUESTION_CONFIRM = new HashMap<String, Boolean>();
 }
