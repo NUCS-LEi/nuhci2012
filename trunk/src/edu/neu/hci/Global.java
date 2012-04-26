@@ -20,7 +20,7 @@ public class Global {
 	public static int WAKE_THRESHOLD = 320;
 	public static int LIGHT_SLEEP_THRESHOLD = 270;
 	public static int DEEP_SLEEP = 240;
-	public static int GROUP_MINUTES = 10;
+	public static int GROUP_MINUTES = 5;
 	public static String CAFFEINE = "caffeine";
 	public static String ALCOHOL = "alcohol";
 	public static String SMOKE = "smoke";

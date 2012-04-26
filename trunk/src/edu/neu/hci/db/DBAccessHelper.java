@@ -305,6 +305,10 @@ public class DBAccessHelper {
 						value[j] = adjustValue;
 				}
 			}
+			if (value.length % Global.GROUP_MINUTES != 0) {
+				for (int j = value.length - 1; j >= value.length - 1 - Global.GROUP_MINUTES; j--)
+					value[j] = adjustValue;
+			}
 			al.add(time);
 			al.add(value);
 			return al;
